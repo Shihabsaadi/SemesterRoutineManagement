@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainContent.cshtml";
+}
+
+<section class="content" ng-app="myApp" ng-controller="sessionCtrl">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-blue">
+                <div class="card-header">
+                    <h3 class="card-title">Session List</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="1%">Sl</th>
+                                <th>Name</th>
+                                <th width="1%">Status</th>
+                                <th width="1%" class="text-center"><button data-toggle="modal" href="#session-modal" title="Create Session" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in SessionList">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.Name}}
+                                </td>
+                                <td>
+                                    <label ng-show="item.Status==1" class="badge badge-success">Active</label>
+                                    <label ng-show="item.Status!=1" class="badge badge-danger">In Active</label>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a data-toggle="modal" href="#session-modal" title="Edit Session" class="btn btn-sm btn-primary" ng-click="onClick('EditSession',item)"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="modal fade" id="session-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create Session</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="Name" type="text" class="form-control" placeholder="Name">
+                                </div>
+                                <label class="col-sm-3 control-label">Active</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="Status" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveSession')"><i class="fa fa-save"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+@section Scripts
+    {
+    <script src="~/scripts/Angular/appModul.js"></script>
+    <script src="~/scripts/Angular/Session/SessionService.js"></script>
+    <script src="~/scripts/Angular/Session/SessionController.js"></script>
+}
+
+

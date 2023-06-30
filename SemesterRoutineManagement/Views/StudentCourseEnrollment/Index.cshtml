@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainContent.cshtml";
+}
+
+<section class="content" ng-app="myApp" ng-controller="studentCourseEnrollmentCtrl">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-blue">
+                <div class="card-header">
+                    <h3 class="card-title">Student Enrollement List</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="1%">Sl</th>
+                                <th>Session</th>
+                                <th>Course</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th width="1%" class="text-center"><button data-toggle="modal" href="#studentCourseEnrollment-modal" title="Create Teacher Appointment" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in studentCourseEnrollmentList">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.Session}}
+                                </td>
+                                <td>
+                                    {{item.Course}}
+                                </td>
+                                <td>
+                                    {{item.StudentName}}
+                                </td>
+                                <td>
+                                    {{item.StudentEmail}}
+                                </td>
+                                <td>
+                                    {{item.StudentPhone}}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a data-toggle="modal"  title="Edit Student Enrollment" class="btn btn-sm btn-danger" ng-click="onClick('DeleteStudentCourseEnrollment',item)"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="modal fade" id="studentCourseEnrollment-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enroll Course</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Course</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="Course" ng-options="item.Id as item.Name for item in courseList" ng-change="onChange('getAvailableStudents')">
+                                    </select>
+                                </div>
+                                <label class="col-sm-3 control-label">Session</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="Session" ng-options="item.Id as item.Name for item in sessionList" ng-change="onChange('getAvailableStudents')">
+                                    </select>
+                                </div>
+                                <label class="col-sm-3 control-label" ng-show="Course!=null && Session!=null">Student</label><br />
+                                <label class="control-label" ng-repeat="item in studentList" ng-show="Course!=null && Session!=null">
+                                    <input type="checkbox" ng-model="item.Selected">{{ item.Name }}
+                                </label>
+
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveStudentCourseEnrollment')"><i class="fa fa-save"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+@section Scripts
+    {
+    <script src="~/scripts/Angular/appModul.js"></script>
+    <script src="~/scripts/Angular/StudentCourseEnrollment/StudentCourseEnrollmentService.js"></script>
+    <script src="~/scripts/Angular/StudentCourseEnrollment/StudentCourseEnrollmentController.js"></script>
+}
+
+

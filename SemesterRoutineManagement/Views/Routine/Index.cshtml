@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainContent.cshtml";
+}
+
+<section class="content" ng-app="myApp" ng-controller="routineCtrl">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-blue">
+                <div class="card-header">
+                    <h3 class="card-title">Routine List</h3>
+                   
+                </div>
+                <div class="card-body">
+                    <label class="col-sm-3 control-label">Session</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" ng-model="Session" ng-options="item.Id as item.Name for item in sessionList" ng-change="onChange('getRoutines')">
+                        </select>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="1%">Sl</th>
+                                <th>Day</th>
+                                <th>CourseName</th>
+                                <th>StartTime</th>
+                                <th>EndTime</th>
+                                <th>RoomNo</th>
+                                <th>TeacherName</th>
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    <th width="1%" class="text-center"><button data-toggle="modal" href="#routine-modal" title="Create Routine" class="btn btn-sm btn-primary" ng-click="onClick('Generate')"><i class="fa fa-plus-circle"></i></button></th>}
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in RoutineListBySession">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.Day}}
+                                </td>
+                                <td>
+                                    {{item.CourseName}}
+                                </td>
+                                <td>
+                                    {{item.StartTime}}
+                                </td>
+                                <td>
+                                    {{item.EndTime}}
+                                </td>
+                                <td>
+                                    {{item.RoomNo}}
+                                </td>
+                                <td>
+                                    {{item.TeacherName}}
+                                </td>
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    <td>
+                                        <div class="btn-group">
+                                            <a data-toggle="modal" title="Edit Routine" class="btn btn-sm btn-danger" ng-click="onClick('Delete',item)"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                }
+                                </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="modal fade" id="routine-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create Routine</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="card-body">
+                            <label class="col-sm-3 control-label">Session</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" ng-model="Session" ng-options="item.Id as item.Name for item in sessionList">
+                                </select>
+                            </div>
+                            <br />
+                            <div class="table table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="1%">Sl</th>
+                                            <th>Day</th>
+                                            <th>CourseName</th>
+                                            <th>StartTime</th>
+                                            <th>EndTime</th>
+                                            <th>RoomNo</th>
+                                            <th>TeacherName</th>
+                                            <th width="1%" class="text-center"><button data-toggle="modal" title="Regenerate Routine" class="btn btn-sm btn-success" ng-click="onClick('Regenerate')"><i class="fa fa-sync"></i></button></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in RoutineList">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                {{item.Day}}
+                                            </td>
+                                            <td>
+                                                {{item.CourseName}}
+                                            </td>
+                                            <td>
+                                                {{item.StartTime}}
+                                            </td>
+                                            <td>
+                                                {{item.EndTime}}
+                                            </td>
+                                            <td>
+                                                {{item.RoomNo}}
+                                            </td>
+                                            <td>
+                                                {{item.TeacherName}}
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a data-toggle="modal" title="Edit Routine" class="btn btn-sm btn-danger" ng-click="onClick('Remove',$index)"><i class="fa fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveRoutine')" ng-disabled="!Session && RoutineList!=null"><i class="fa fa-save"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+@section Scripts
+    {
+    <script src="~/scripts/Angular/appModul.js"></script>
+    <script src="~/scripts/Angular/Routine/RoutineService.js"></script>
+    <script src="~/scripts/Angular/Routine/RoutineController.js"></script>
+}
+
+

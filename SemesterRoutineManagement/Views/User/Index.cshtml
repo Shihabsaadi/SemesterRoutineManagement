@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainContent.cshtml";
+}
+
+<section class="content" ng-app="myApp" ng-controller="userCtrl">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-blue">
+                <div class="card-header">
+                    <h3 class="card-title">User List</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="1%">Sl</th>
+                                <th>Name</th>
+                                <th width="1%">Status</th>
+                                <th width="1%" class="text-center"><button data-toggle="modal" href="#user-modal" title="Create User" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in userList">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.Name}}
+                                </td>
+                                <td>
+                                    <label ng-show="item.Status==1" class="badge badge-success">Active</label>
+                                    <label ng-show="item.Status!=1" class="badge badge-danger">In Active</label>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a data-toggle="modal" ng-show="!item.OwnAccount" href="#user-modal" title="Edit User" class="btn btn-sm btn-primary" ng-click="onClick('EditUser',item)"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="modal fade" id="user-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-12">
+                                    <input ng-model="Name" type="text" class="form-control" placeholder="Enter your name">
+                                </div>
+                                <label class="col-sm-3 control-label">Role</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="Role" >
+                                        <option ng-repeat="item in roleList" value="{{item.Name}}"> {{item.Name}}</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-3 control-label">Phone</label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" ng-model="Phone" maxlength="11" placeholder="Enter your phone" type="number">
+                                </div>
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" placeholder="Enter your mail" ng-model="Email" type="email">
+                                </div>
+                                <label class="col-sm-3 control-label">UserName</label>
+                                <div class="col-sm-12">
+                                    <input class="form-control"  placeholder="Enter your username"  ng-model="UserName" type="text">
+                                </div>
+                                <label class="col-sm-3 control-label">Active</label>
+                                <div class="col-sm-12">
+                                    <input ng-model="Status" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- /.card-footer -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveUser')"><i class="fa fa-save"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+@section Scripts
+    {
+    <script src="~/scripts/Angular/appModul.js"></script>
+    <script src="~/scripts/Angular/User/UserService.js"></script>
+    <script src="~/scripts/Angular/User/UserController.js"></script>
+}
+
+

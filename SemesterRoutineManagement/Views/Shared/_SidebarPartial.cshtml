@@ -1,0 +1,102 @@
+﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="~/Member/Index" class="brand-link">
+        <img src="../../dist/img/M_Logo.png"
+             alt="AdminLTE Logo"
+             class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Routine Management</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+       
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+                @*<li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    Manage
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+            </ul>
+        </li>*@
+                <li class="nav-item">
+                    <a href="/Course/Index" class="nav-link">
+                        <i class="fa fa-book nav-icon"></i>
+                        <p>Course</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Routine/Index" class="nav-link">
+                        <i class="fa fa-calendar-day nav-icon"></i>
+                        <p>Routine</p>
+                    </a>
+                </li>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <li class="nav-item">
+                        <a href="/Course/Index" class="nav-link">
+                            <i class="fa fa-book nav-icon"></i>
+                            <p>Course</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Role/Index" class="nav-link">
+                            <i class="fa fa-tag nav-icon"></i>
+                            <p>Role</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/User/Index" class="nav-link">
+                            <i class="fa fa-user nav-icon"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/TeacherAppointment/Index" class="nav-link">
+                            <i class="fa fa-user-tag nav-icon"></i>
+                            <p>Teacher Appointment</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Room/Index" class="nav-link">
+                            <i class="fa fa-house-damage nav-icon"></i>
+                            <p>Room</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Timespan/Index" class="nav-link">
+                            <i class="fa fa-clock nav-icon"></i>
+                            <p>Timespan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Session/Index" class="nav-link">
+                            <i class="fa fa-clipboard nav-icon"></i>
+                            <p>Session</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/StudentCourseEnrollment/Index" class="nav-link">
+                            <i class="fa fa-clipboard nav-icon"></i>
+                            <p>Student Course Enrollment</p>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
