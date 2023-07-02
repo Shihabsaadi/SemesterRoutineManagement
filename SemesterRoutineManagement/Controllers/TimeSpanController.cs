@@ -37,6 +37,7 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult SaveTimeSpan(TimeSpanModel model)
         {
             var Message = "Action Failed";
+            bool Success = false;
             if (model.Id > 0)
             {
                 Models.TimeSpan updateDB = db.TimeSpans.Find(model.Id);

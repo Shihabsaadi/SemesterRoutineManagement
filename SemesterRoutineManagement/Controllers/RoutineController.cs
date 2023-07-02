@@ -73,7 +73,7 @@ namespace SemesterRoutineManagement.Controllers
 
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
-            public JsonResult GenerateRoutine()
+        public JsonResult GenerateRoutine()
         {
             List<Course> courses = db.Courses.Where(x=>x.Status==true).ToList();
             //courses=Shuffle(courses);
@@ -195,10 +195,10 @@ namespace SemesterRoutineManagement.Controllers
 
             return Json(generatedRoutine, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult Save(RoutineModel model)
         {
             var Message = "Action Failed";
+            bool Success=false;
             try
             {
                 Routine RoutineDB = new Routine();
@@ -214,14 +214,16 @@ namespace SemesterRoutineManagement.Controllers
                     db.SaveChanges();
                 }
                 Message = " Added Successfully";
+                Success = true;
             }
             catch (Exception ex)
             {
                 Message = ex.Message;
+                Success=false;
             }
             
 
-            return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+            return Json(new { Message = Message,Success=Success }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteRoutine(RoutineModel model)
         {

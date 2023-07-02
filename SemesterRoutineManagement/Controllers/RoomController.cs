@@ -32,26 +32,39 @@ namespace SemesterRoutineManagement.Controllers
         }
         public JsonResult SaveRoom(RoomModel model)
         {
+           
             var Message = "Action Failed";
-            if (model.Id > 0)
+            bool Success = false;
+
+            try
             {
-                Room updateDB = db.Rooms.Find(model.Id);
-                updateDB.No= model.No;
-                updateDB.Status = model.Status;
-                db.Entry(updateDB).State = EntityState.Modified;
-                db.SaveChanges();
-                Message = model.No + " Updated Successfully";
+                if (model.Id > 0)
+                {
+                    Room updateDB = db.Rooms.Find(model.Id);
+                    updateDB.No = model.No;
+                    updateDB.Status = model.Status;
+                    db.Entry(updateDB).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Message = model.No + " Updated Successfully";
+                }
+                else
+                {
+                    Room RoomDB = new Room();
+                    RoomDB.No = model.No;
+                    RoomDB.Status = true;
+                    db.Rooms.Add(RoomDB);
+                    db.SaveChanges();
+                    Message = model.No + " Added Successfully";
+                }
+                Success = true;
             }
-            else
+            catch (Exception ex)
             {
-                Room RoomDB = new Room();
-                RoomDB.No = model.No;
-                RoomDB.Status = true;
-                db.Rooms.Add(RoomDB);
-                db.SaveChanges();
-                Message = model.No + " Added Successfully";
+                Message = ex.Message;
+                Success = false;
             }
-            return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+        
+            return Json(new { Message = Message, Success = Success }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -28,7 +28,7 @@
                 console.log('post', data)
                 roomService.saveRoom(data).then(function (response) {
 
-                    if (response.data) {
+                    if (response.data.Success) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -38,7 +38,15 @@
                         })
                         sync();
                     }
-
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'error',
+                            title: response.data.Message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 });
                 break;
              default:

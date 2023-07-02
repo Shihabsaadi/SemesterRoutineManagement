@@ -69,28 +69,53 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult Save(StudentCourseEnrollmentModel model)
         {
             var Message = "Action Failed";
-            var obj = db.Users.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
-            StudentCourseEnrollment studentCourseEnrollment = new StudentCourseEnrollment();
-            foreach (var studentId in model.StudentIds)
+            bool Success = false;
+            try
             {
-                studentCourseEnrollment.StudentId = studentId;
-                studentCourseEnrollment.CourseId= model.CourseId;
-                studentCourseEnrollment.SessionId= model.SessionId;
-                studentCourseEnrollment.Status = true;
-                db.StudentCourseEnrollments.Add(studentCourseEnrollment);
-                db.SaveChanges();
+                var obj = db.Users.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+                StudentCourseEnrollment studentCourseEnrollment = new StudentCourseEnrollment();
+                foreach (var studentId in model.StudentIds)
+                {
+                    studentCourseEnrollment.StudentId = studentId;
+                    studentCourseEnrollment.CourseId = model.CourseId;
+                    studentCourseEnrollment.SessionId = model.SessionId;
+                    studentCourseEnrollment.Status = true;
+                    db.StudentCourseEnrollments.Add(studentCourseEnrollment);
+                    db.SaveChanges();
+                }
+                Message = " Added Successfully";
+                Success = true;
             }
-            Message =" Added Successfully";
-            return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+
+                Message =ex.Message;
+                Success = false;
+            }
+            
+            return Json(new { Message = Message,Success=Success }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteStudentCourseEnrollment(StudentCourseEnrollmentModel model)
         {
-            StudentCourseEnrollment deleteItem = db.StudentCourseEnrollments.Find(model.Id);
-            if (deleteItem == null)
-                return Json(new { Message = "Not Found" }, JsonRequestBehavior.AllowGet);
-            db.StudentCourseEnrollments.Remove(deleteItem);
-            db.SaveChanges();
-            return Json(new { Message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+            var Message = "Action Failed";
+            bool Success = false;
+            try
+            {
+                StudentCourseEnrollment deleteItem = db.StudentCourseEnrollments.Find(model.Id);
+                if (deleteItem == null)
+                    return Json(new { Message = "Not Found" }, JsonRequestBehavior.AllowGet);
+                db.StudentCourseEnrollments.Remove(deleteItem);
+                db.SaveChanges();
+                Message = "Deleted Successfully";
+                Success = true;
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+                Success = false;
+            }
+           
+            return Json(new { Message = Message, Success=Success}, JsonRequestBehavior.AllowGet);
         }
     }
 }

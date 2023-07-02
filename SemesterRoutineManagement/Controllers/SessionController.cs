@@ -33,25 +33,36 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult SaveSession(SessionModel model)
         {
             var Message = "Action Failed";
-            if (model.Id > 0)
+            bool Success = false;
+            try
             {
-                Session updateDB = db.Sessions.Find(model.Id);
-                updateDB.Name = model.Name;
-                updateDB.Status = model.Status;
-                db.Entry(updateDB).State = EntityState.Modified;
-                db.SaveChanges();
-                Message = model.Name + " Updated Successfully";
+                if (model.Id > 0)
+                {
+                    Session updateDB = db.Sessions.Find(model.Id);
+                    updateDB.Name = model.Name;
+                    updateDB.Status = model.Status;
+                    db.Entry(updateDB).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Message = model.Name + " Updated Successfully";
+                }
+                else
+                {
+                    Session sessionDB = new Session();
+                    sessionDB.Name = model.Name;
+                    sessionDB.Status = true;
+                    db.Sessions.Add(sessionDB);
+                    db.SaveChanges();
+                    Message = model.Name + " Added Successfully";
+                }
+                Success = true;
             }
-            else
+            catch (Exception ex)
             {
-                Session sessionDB = new Session();
-                sessionDB.Name = model.Name;
-                sessionDB.Status = true;
-                db.Sessions.Add(sessionDB);
-                db.SaveChanges();
-                Message = model.Name + " Added Successfully";
+                Message = ex.Message    ;
+                Success = false;
             }
-            return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+            
+            return Json(new { Message = Message,Success=Success }, JsonRequestBehavior.AllowGet);
         }
     }
 }

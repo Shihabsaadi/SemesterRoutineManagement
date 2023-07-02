@@ -32,25 +32,36 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult SaveRole(RoleModel model)
         {
             var Message = "Action Failed";
-            if (model.Id > 0)
+            bool Success=false;
+            try
             {
-                Role updateDB = db.Roles.Find(model.Id);
-                updateDB.Name = model.Name;
-                updateDB.Status = model.Status;
-                db.Entry(updateDB).State = EntityState.Modified;
-                db.SaveChanges();
-                Message = model.Name+ " Updated Successfully";
+                if (model.Id > 0)
+                {
+                    Role updateDB = db.Roles.Find(model.Id);
+                    updateDB.Name = model.Name;
+                    updateDB.Status = model.Status;
+                    db.Entry(updateDB).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Message = model.Name + " Updated Successfully";
+                }
+                else
+                {
+                    Role roleDB = new Role();
+                    roleDB.Name = model.Name;
+                    roleDB.Status = true;
+                    db.Roles.Add(roleDB);
+                    db.SaveChanges();
+                    Message = model.Name + " Added Successfully";
+                }
+                Success = true;
             }
-            else
+            catch (Exception ex)
             {
-                Role roleDB = new Role();
-                roleDB.Name = model.Name;
-                roleDB.Status = true;
-                db.Roles.Add(roleDB);
-                db.SaveChanges();
-                Message = model.Name + " Added Successfully";
+                Message = ex.Message;
+                Success = false;
             }
-            return Json(new{Message = Message }, JsonRequestBehavior.AllowGet);
+            
+            return Json(new{Message = Message, Success = Success }, JsonRequestBehavior.AllowGet);
         }
     }
 }

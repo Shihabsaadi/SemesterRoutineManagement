@@ -18,7 +18,7 @@
                                 <th width="1%">Sl</th>
                                 <th>Name</th>
                                 <th width="1%">Status</th>
-                                <th width="1%" class="text-center"><button data-toggle="modal" href="#role-modal" title="Create Role" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
+                                @*<th width="1%" class="text-center"><button data-toggle="modal" href="#role-modal" title="Create Role" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -31,11 +31,11 @@
                                     <label ng-show="item.Status==1" class="badge badge-success">Active</label>
                                     <label ng-show="item.Status!=1" class="badge badge-danger">In Active</label>
                                 </td>
-                                <td>
+                                @*<td>
                                     <div class="btn-group">
                                         <a data-toggle="modal" href="#role-modal" title="Edit Role" class="btn btn-sm btn-primary" ng-click="onClick('EditRole',item)"><i class="fa fa-edit"></i></a>
                                     </div>
-                                </td>
+                                </td>*@
                             </tr>
 
                     </table>

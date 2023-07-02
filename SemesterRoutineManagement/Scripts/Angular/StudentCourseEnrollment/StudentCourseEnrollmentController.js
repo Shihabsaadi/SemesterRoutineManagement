@@ -55,8 +55,7 @@
                     StudentIds: selectedItems
                     }
                 studentCourseEnrollmentService.save(data).then(function (response) {
-
-                    if (response.data) {
+                    if (response.data.Success) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -64,7 +63,16 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        sync()
+                        sync();
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'error',
+                            title: response.data.Message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
 
                 });
@@ -83,13 +91,24 @@
                     if (willDelete.value == true) {
                         data = { Id: obj.Id }
                         studentCourseEnrollmentService.deleteStudentCourseEnrollment(data).then(function (response) {
-                            if (response.data) {
-                                swal.fire(
-                                    'Deleted!',
-                                    obj.StudentName + ' has been removed ' + 'from Session: ' + obj.Session + ' and Course:' + obj.Course,
-                                    'success'
-                                )
+                            if (response.data.Success) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: response.data.Message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
                                 sync();
+                            }
+                            else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'error',
+                                    title: response.data.Message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
                             }
                         });
                     }

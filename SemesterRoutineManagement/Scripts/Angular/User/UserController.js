@@ -1,4 +1,5 @@
 ﻿app.controller('userCtrl', function ($scope, userService) {
+    $scope.editUser = false;
     var getRoleList = function ()
     {
         userService.getRole().then(function (response) {
@@ -19,12 +20,14 @@
                 sync();
                 break;
             case "EditUser":
+                console.log('obj', obj)
                 $scope.Name = obj.Name
                 $scope.Id = obj.Id
                 $scope.Role = obj.Role
                 $scope.Status = obj.Status
-                $scope.Phone = obj.Phone
+                $scope.Phone = obj.phone
                 $scope.Email = obj.Email
+                $scope.editUser = true;
                 break;
             case "SaveUser":
                 data=
@@ -34,12 +37,11 @@
                         Status: $scope.Status,
                         Email: $scope.Email,
                         Role : $scope.Role,
-                        Phone: $scope.Phone,
+                        phone: $scope.Phone,
                         UserName: $scope.UserName,
                     }
                 userService.saveUser(data).then(function (response) {
-
-                    if (response.data) {
+                    if (response.data.Success) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -49,6 +51,15 @@
                         })
                         sync();
                     }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'error',
+                            title: response.data.Message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
 
                 });
                 break;
@@ -57,6 +68,7 @@
     }
 
     var sync = function () {
+        $scope.editUser = false;
         $scope.Name = null
         $scope.Id = null
         $scope.Role = null

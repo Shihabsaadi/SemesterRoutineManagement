@@ -28,7 +28,7 @@
                     }
                 roleService.saveRole(data).then(function (response) {
 
-                    if (response.data) {
+                    if (response.data.Success) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -37,6 +37,15 @@
                             timer: 1500
                         })
                         sync();
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'error',
+                            title: response.data.Message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
 
                 });

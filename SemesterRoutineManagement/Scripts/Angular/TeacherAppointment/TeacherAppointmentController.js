@@ -40,7 +40,7 @@
                     }
                 teacherAppointmentService.save(data).then(function (response) {
 
-                    if (response.data) {
+                    if (response.data.Success) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -48,7 +48,16 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        sync()
+                        sync();
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'error',
+                            title: response.data.Message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
 
                 });

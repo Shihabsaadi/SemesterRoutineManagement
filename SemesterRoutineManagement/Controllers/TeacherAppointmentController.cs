@@ -59,6 +59,7 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult Save(TeacherAppointmentModel model)
         {
             var Message = "Action Failed";
+            bool Success = false;
             try
             {
                 if (model.Id > 0)
@@ -83,16 +84,41 @@ namespace SemesterRoutineManagement.Controllers
                     db.SaveChanges();
                     Message = " Added Successfully";
                 }
-                return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+                Success = true;
             }
             catch (Exception ex)
             {
 
                 Message =ex.Message;
-                return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+                Success = false;
             }
-          
+            return Json(new { Message = Message,Success= Success }, JsonRequestBehavior.AllowGet);
+
+
         }
+        public JsonResult DeleteTeacherAppointment(TeacherAppointmentModel model)
+        {
+            var Message = "Action Failed";
+            bool Success = false;
+            try
+            {
+                TeacherAppointment deleteItem = db.TeacherAppointments.Find(model.Id);
+                if (deleteItem == null)
+                    return Json(new { Message = "Not Found" }, JsonRequestBehavior.AllowGet);
+                db.TeacherAppointments.Remove(deleteItem);
+                db.SaveChanges();
+                Message = "Deleted Successfully";
+                Success = true;
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+                Success = false;
+            }
+
+            return Json(new { Message = Message, Success = Success }, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

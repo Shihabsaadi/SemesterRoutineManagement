@@ -17,6 +17,9 @@
                             <tr>
                                 <th width="1%">Sl</th>
                                 <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
                                 <th width="1%">Status</th>
                                 <th width="1%" class="text-center"><button data-toggle="modal" href="#user-modal" title="Create User" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
                             </tr>
@@ -24,9 +27,10 @@
                         <tbody>
                             <tr ng-repeat="item in userList">
                                 <td>{{$index+1}}</td>
-                                <td>
-                                    {{item.Name}}
-                                </td>
+                                <td> {{item.Name}}</td>
+                                <td> {{item.Email}}</td>
+                                <td> {{item.phone}}</td>
+                                <td> {{item.Role}}</td>
                                 <td>
                                     <label ng-show="item.Status==1" class="badge badge-success">Active</label>
                                     <label ng-show="item.Status!=1" class="badge badge-danger">In Active</label>
@@ -71,14 +75,14 @@
                                 </div>
                                 <label class="col-sm-3 control-label">Phone</label>
                                 <div class="col-sm-12">
-                                    <input class="form-control" ng-model="Phone" maxlength="11" placeholder="Enter your phone" type="number">
+                                    <input class="form-control" ng-model="Phone" maxlength="11" placeholder="Enter your phone" type="text">
                                 </div>
                                 <label class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-12">
                                     <input class="form-control" placeholder="Enter your mail" ng-model="Email" type="email">
                                 </div>
-                                <label class="col-sm-3 control-label">UserName</label>
-                                <div class="col-sm-12">
+                                <label class="col-sm-3 control-label" ng-show="!editUser">UserName</label>
+                                <div class="col-sm-12" ng-show="!editUser">
                                     <input class="form-control"  placeholder="Enter your username"  ng-model="UserName" type="text">
                                 </div>
                                 <label class="col-sm-3 control-label">Active</label>

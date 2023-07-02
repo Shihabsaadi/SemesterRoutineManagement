@@ -71,35 +71,45 @@ namespace SemesterRoutineManagement.Controllers
         public JsonResult SaveCourse(CourseModel model)
         {
             var Message = "Action Failed";
+            bool Success = false;
             var obj = db.Users.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
-
-            if (model.Id > 0)
+            try
             {
-                Course updateDB = db.Courses.Find(model.Id);
-                updateDB.Name = model.Name;
-                updateDB.ShortName = model.ShortName;   
-                updateDB.ModifedBy = obj.Id;
-                updateDB.ModifiedAt =DateTime.UtcNow;
-                updateDB.Status = model.Status;
-                db.Entry(updateDB).State = EntityState.Modified;
-                db.SaveChanges();
-                Message = model.Name + " Updated Successfully";
+                if (model.Id > 0)
+                {
+                    Course updateDB = db.Courses.Find(model.Id);
+                    updateDB.Name = model.Name;
+                    updateDB.ShortName = model.ShortName;
+                    updateDB.ModifedBy = obj.Id;
+                    updateDB.ModifiedAt = DateTime.UtcNow;
+                    updateDB.Status = model.Status;
+                    db.Entry(updateDB).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Message = model.Name + " Updated Successfully";
+                }
+                else
+                {
+                    int getLastCourse = db.Courses.Count() > 0 ? db.Courses.OrderByDescending(x => x.Id).FirstOrDefault().Id + 1 : 1;
+                    Course course = new Course();
+                    course.Name = model.Name;
+                    course.Code = "C-" + getLastCourse;
+                    course.Status = true;
+                    course.ShortName = model.ShortName;
+                    course.CreatedBy = obj.Id;
+                    course.CreatedAt = DateTime.UtcNow;
+                    db.Courses.Add(course);
+                    db.SaveChanges();
+                    Message = model.Name + " Added Successfully";
+                }
+                Success = true;
             }
-            else
+            catch (Exception ex)
             {
-                int getLastCourse = db.Courses.Count() > 0 ? db.Courses.OrderByDescending(x => x.Id).FirstOrDefault().Id+1 : 1;
-                Course course = new Course();
-                course.Name = model.Name;
-                course.Code = "C-" + getLastCourse;
-                course.Status = true;
-                course.ShortName = model.ShortName;
-                course.CreatedBy = obj.Id;
-                course.CreatedAt = DateTime.UtcNow;
-                db.Courses.Add(course);
-                db.SaveChanges();
-                Message = model.Name + " Added Successfully";
+                Message = ex.Message;
+                Success = false;
             }
-            return Json(new { Message = Message }, JsonRequestBehavior.AllowGet);
+            
+            return Json(new { Message = Message,Success=Success }, JsonRequestBehavior.AllowGet);
         }
     }
 }
