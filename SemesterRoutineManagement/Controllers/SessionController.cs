@@ -30,6 +30,20 @@ namespace SemesterRoutineManagement.Controllers
             }).ToList();
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
+        [AllowAnonymous]
+        public JsonResult GetAvailableSessionList()
+        {
+            List<int> sessionIds = db.Routines.GroupBy(x => x.SessionId).Select(x=>(x.Key)).ToList();
+            List<Session> session = db.Sessions.Where(x=> !sessionIds.Contains(x.Id)).ToList();
+            List<SessionModel> vm = session.Select(x => new SessionModel
+            {
+                Name = x.Name,
+                Id = x.Id,
+                Status = x.Status
+            }).ToList();
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+        
         public JsonResult SaveSession(SessionModel model)
         {
             var Message = "Action Failed";

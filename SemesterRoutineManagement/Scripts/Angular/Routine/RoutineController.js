@@ -12,10 +12,17 @@
         })
     }
     getSessionList()
+    var getAvailableSessionList = function () {
+        routineService.getAvailableSession().then(function (response) {
+            $scope.availableSessionList = response.data;
+        })
+    }
+    
     $scope.onClick = function (expression, obj) {
         var data = []
         switch (expression) {
             case "Generate":
+                getAvailableSessionList();
                 GenerateRoutine();
                 break;
             case "Regenerate":
@@ -27,7 +34,7 @@
             case "SaveRoutine":
                 data =
                 {
-                    SessionId: $scope.Session,
+                    SessionId: $scope.availableSession,
                     Routines: $scope.RoutineList
                 }
                 routineService.Save(data).then(function (response) {

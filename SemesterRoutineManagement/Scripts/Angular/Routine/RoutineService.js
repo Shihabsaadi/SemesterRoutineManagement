@@ -3,6 +3,9 @@
     this.getSession = function () {
         return $http.get("/Session/GetSessionList");
     }
+    this.getAvailableSession = function () {
+        return $http.get("/Session/GetAvailableSessionList");
+    }
     this.getRoutine = function (data) {
         return $http.post("/Routine/GetRoutineList", JSON.stringify(data));
     }
