@@ -29,7 +29,7 @@ namespace SemesterRoutineManagement.Controllers
 
                 if (objUser.Role == "SuperAdmin")
                 {
-                    return RedirectToAction("Index", "Role");
+                    return RedirectToAction("Index", "Course");
 
                 }
                 
@@ -54,7 +54,7 @@ namespace SemesterRoutineManagement.Controllers
                     var user=db.Users.Where(x => x.UserName == model.UserName).Select(x => new {Role=x.Role}).FirstOrDefault();
                     if (user.Role == "SuperAdmin")
                     {
-                        return RedirectToAction("Index", "Role");
+                        return RedirectToAction("Index", "Course");
 
                     }
                     else if (user.Role == "Teacher")
