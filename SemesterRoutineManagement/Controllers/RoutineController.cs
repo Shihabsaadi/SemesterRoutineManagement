@@ -1,6 +1,7 @@
 ﻿using SemesterRoutineManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -75,11 +76,12 @@ namespace SemesterRoutineManagement.Controllers
         }
         public JsonResult GenerateRoutine()
         {
-            List<Course> courses = db.Courses.Where(x=>x.Status==true).ToList();
-            //courses=Shuffle(courses);
+            List<Course> courses = db.Courses.Where(x => x.Status == true && (x.Term == ((int)Term.FirstYearFirstSemester)
+            || x.Term == ((int)Term.SecondYearFirstSemester) || x.Term == ((int)Term.ThirdYearFirstSemester) || x.Term == ((int)Term.FourthYearFirstSemester)
+            )).ToList();            //courses=Shuffle(courses);
             var courseIds=courses.Select(x=>x.Id).ToList();
 
-            var weekDays= db.WeekDays.Where(x=>x.Weekend==false).Select(x => new
+            var weekDays= db.WeekDays.Where(x=>x.Status==true).Select(x => new
             {
                 Id=x.Id,
                 Name=x.Name,
@@ -143,7 +145,7 @@ namespace SemesterRoutineManagement.Controllers
                                 {
                                     if (!generatedRoutine.Any(x => x.DayId == weekDay.Id && x.TimeSpanId == timeSpan.Id && x.TeacherId == teacher.TeacherId))
                                     {
-                                        if (generatedRoutine.Where(x => x.CourseId == teacher.CourseId /*course.Id*/).Count() < 3)
+                                        if (generatedRoutine.Where(x => x.CourseId == teacher.CourseId /*course.Id*/).Count() < 1)
                                         {
                                             generatedRoutine.Add(new RoutineModel
                                             {

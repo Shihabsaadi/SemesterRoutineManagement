@@ -57,7 +57,20 @@
         <li class="nav-item">
             @if (User.Identity.IsAuthenticated)
             {
-                <b class="nav-link">@User.Identity.Name</b>
+                <b class="nav-link">
+                    @User.Identity.Name - @if (User.IsInRole("SuperAdmin"))
+                    {
+                        <span>SuperAdmin</span>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <span>Teacher</span>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <span>Student</span>
+                    }
+                </b>
             }
         </li>
         <li class="nav-item">

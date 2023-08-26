@@ -5,28 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e2791254358c4d308ed423e735cc51c2" Name="Diagram1">
-        <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Course" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Course_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.StudentCourseEnrollment" Width="1.5" PointX="5.25" PointY="3.75" />
-        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Course" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.TeacherAppointment" Width="1.5" PointX="8.25" PointY="4.625" />
-        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_TeacherAppointment_Course" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_TeacherAppointment_User" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Room" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Session" Width="1.5" PointX="3.375" PointY="7.875" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Routine" Width="1.5" PointX="10.625" PointY="3.75" />
-        <EntityTypeShape EntityType="SemesterRoutineMSDBModel.WeekDay" Width="1.5" PointX="8.375" PointY="1.25" />
-        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_Course" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_Room" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_Session" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_User" />
-        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_WeekDay" />
         <EntityTypeShape EntityType="SemesterRoutineMSDBModel.TimeSpan" Width="1.5" PointX="5.375" PointY="7.875" />
         <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_TimeSpan" />
+        <EntityTypeShape EntityType="SemesterRoutineMSDBModel.Course" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="SemesterRoutineMSDBModel.WeekDay" Width="1.5" PointX="8.375" PointY="1.375" />
+        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Course_User" />
+        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_Course" />
+        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Course" />
+        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_TeacherAppointment_Course" />
+        <AssociationConnector Association="SemesterRoutineMSDBModel.FK_Routine_WeekDay" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,10 +16,10 @@ namespace SemesterRoutineManagement.Models
     {
         public User()
         {
-            this.Courses = new HashSet<Course>();
             this.StudentCourseEnrollments = new HashSet<StudentCourseEnrollment>();
             this.TeacherAppointments = new HashSet<TeacherAppointment>();
             this.Routines = new HashSet<Routine>();
+            this.Courses = new HashSet<Course>();
         }
     
         public int Id { get; set; }
@@ -31,9 +31,9 @@ namespace SemesterRoutineManagement.Models
         public string Email { get; set; }
         public string Phone { get; set; }
     
-        public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public virtual ICollection<TeacherAppointment> TeacherAppointments { get; set; }
         public virtual ICollection<Routine> Routines { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

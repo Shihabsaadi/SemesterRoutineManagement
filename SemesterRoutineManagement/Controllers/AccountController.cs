@@ -47,35 +47,30 @@ namespace SemesterRoutineManagement.Controllers
         {
             try
             {
-                bool isValid = db.Users.Any(x => x.UserName == model.UserName && x.Password == model.Password && x.Status == true);
-                if (isValid)
+                var user = db.Users.FirstOrDefault(x => x.UserName == model.UserName && x.Status == true);
+
+                if (user != null && user.Password == model.Password)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
-                    var user=db.Users.Where(x => x.UserName == model.UserName).Select(x => new {Role=x.Role}).FirstOrDefault();
-                    if (user.Role == "SuperAdmin")
+
+                    if (user.Role == "SuperAdmin" || user.Role == "Teacher" || user.Role == "Student")
                     {
                         return RedirectToAction("Index", "Course");
-
-                    }
-                    else if (user.Role == "Teacher")
-                    {
-                        return RedirectToAction("Index", "Course");
-
-                    }
-                    else if (user.Role == "Student")
-                    {
-                        return RedirectToAction("Index", "Course");
-
                     }
                 }
-                ModelState.AddModelError("", "Invalid");
-                return View();
+                else
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                }
+
+                return View(model);
             }
             catch (Exception ex)
             {
-                throw ex;
+                ModelState.AddModelError("", "An error occurred while processing your request.");
+                return View(model);
             }
-           
+
         }
         public ActionResult Logout()
         {

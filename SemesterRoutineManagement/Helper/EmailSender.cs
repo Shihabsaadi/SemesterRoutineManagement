@@ -11,8 +11,8 @@ namespace SemesterRoutineManagement.Helper
     {
         public static void SendEmail(string recipient, string subject, string body)
         {
-            string senderEmail = "s.saadi2047@gmail.com"; // Replace with your sender email address
-            string senderPassword = "gdhwjbptfkjshdfb"; // Replace with your sender email password
+            string senderEmail = "sba1320@gmail.com"; // Replace with your sender email address
+            string senderPassword = "xdyczimfbibaalbp"; // Replace with your sender email password
 
             MailMessage mail = new MailMessage(senderEmail, recipient, subject, body);
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587); // Replace with your SMTP server details

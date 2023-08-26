@@ -23,7 +23,6 @@ namespace SemesterRoutineManagement.Models
         public string Name { get; set; }
         public string ShortName { get; set; }
         public int Sort { get; set; }
-        public Nullable<bool> Weekend { get; set; }
         public Nullable<bool> Status { get; set; }
     
         public virtual ICollection<Routine> Routines { get; set; }

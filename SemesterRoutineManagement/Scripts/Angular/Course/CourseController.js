@@ -18,6 +18,8 @@
                 $scope.Id = obj.Id
                 $scope.Status = obj.Status
                 $scope.ShortName = obj.ShortName
+                $scope.Code = obj.Code
+
                 break;
             case "SaveCourse":
                 data=
@@ -25,7 +27,8 @@
                         Id: $scope.Id,
                         Name: $scope.Name,
                         ShortName:$scope.ShortName,
-                        Status:$scope.Status
+                        Status: $scope.Status,
+                        Code: $scope.Code
                     }
                 courseService.saveCourse(data).then(function (response) {
 

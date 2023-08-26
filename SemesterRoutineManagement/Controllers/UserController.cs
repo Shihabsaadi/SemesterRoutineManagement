@@ -76,7 +76,7 @@ namespace SemesterRoutineManagement.Controllers
                     Message = model.Name + " Added Successfully";
                     try
                     {
-                        EmailSender.SendEmail(model.Email, "User has been created for Semesete Management", " Your User for Semster Routine Management has been created. The UserName: " + user.UserName + " & Password: " + user.Password + " ,your user has created as " + user.Role);
+                        //EmailSender.SendEmail(model.Email, "User has been created for Semesete Management", " Your User for Semster Routine Management has been created. The UserName: " + user.UserName + " & Password: " + user.Password + " ,your user has created as " + user.Role);
                     }
                     catch (Exception)
                     {

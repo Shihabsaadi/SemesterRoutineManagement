@@ -185,6 +185,7 @@
       <DependentUpon>SemesterRoutineManagementDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TeacherAppointmentModel.cs" />
+    <Compile Include="Models\TermModel.cs" />
     <Compile Include="Models\TimeSpan.cs">
       <DependentUpon>SemesterRoutineManagementDBEntities.tt</DependentUpon>
     </Compile>

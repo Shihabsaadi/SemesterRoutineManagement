@@ -25,7 +25,6 @@ namespace SemesterRoutineManagement.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Course> Courses { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
@@ -33,7 +32,8 @@ namespace SemesterRoutineManagement.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Routine> Routines { get; set; }
-        public DbSet<WeekDay> WeekDays { get; set; }
         public DbSet<TimeSpan> TimeSpans { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<WeekDay> WeekDays { get; set; }
     }
 }

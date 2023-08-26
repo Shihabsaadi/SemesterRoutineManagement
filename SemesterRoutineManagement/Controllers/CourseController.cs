@@ -33,8 +33,7 @@ namespace SemesterRoutineManagement.Controllers
                     Status = x.Status,
                     Code = x.Code,
                     CreatedAt = x.CreatedAt,
-                    CreatedBy = x.CreatedBy,
-                    ShortName = x.ShortName
+                    CreatedBy = x.CreatedBy
                 }).ToList();
             }
            else if(obj.Role == "Teacher")
@@ -47,8 +46,7 @@ namespace SemesterRoutineManagement.Controllers
                     Status = x.Status,
                     Code = x.Code,
                     CreatedAt = x.CreatedAt,
-                    CreatedBy = x.CreatedBy,
-                    ShortName = x.ShortName
+                    CreatedBy = x.CreatedBy
                 }).ToList();
             }
             else if (obj.Role == "Student")
@@ -61,8 +59,7 @@ namespace SemesterRoutineManagement.Controllers
                     Status = x.Status,
                     Code = x.Code,
                     CreatedAt = x.CreatedAt,
-                    CreatedBy = x.CreatedBy,
-                    ShortName = x.ShortName
+                    CreatedBy = x.CreatedBy
                 }).ToList();
             }
             return Json(vm, JsonRequestBehavior.AllowGet);
@@ -79,7 +76,7 @@ namespace SemesterRoutineManagement.Controllers
                 {
                     Course updateDB = db.Courses.Find(model.Id);
                     updateDB.Name = model.Name;
-                    updateDB.ShortName = model.ShortName;
+                    updateDB.Code = model.Code;
                     updateDB.ModifedBy = obj.Id;
                     updateDB.ModifiedAt = DateTime.UtcNow;
                     updateDB.Status = model.Status;
@@ -89,12 +86,11 @@ namespace SemesterRoutineManagement.Controllers
                 }
                 else
                 {
-                    int getLastCourse = db.Courses.Count() > 0 ? db.Courses.OrderByDescending(x => x.Id).FirstOrDefault().Id + 1 : 1;
+                    //int getLastCourse = db.Courses.Count() > 0 ? db.Courses.OrderByDescending(x => x.Id).FirstOrDefault().Id + 1 : 1;
                     Course course = new Course();
                     course.Name = model.Name;
-                    course.Code = "C-" + getLastCourse;
+                    course.Code = model.Code;
                     course.Status = true;
-                    course.ShortName = model.ShortName;
                     course.CreatedBy = obj.Id;
                     course.CreatedAt = DateTime.UtcNow;
                     db.Courses.Add(course);

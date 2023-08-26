@@ -16,24 +16,24 @@ namespace SemesterRoutineManagement.Models
     {
         public Course()
         {
+            this.Routines = new HashSet<Routine>();
             this.StudentCourseEnrollments = new HashSet<StudentCourseEnrollment>();
             this.TeacherAppointments = new HashSet<TeacherAppointment>();
-            this.Routines = new HashSet<Routine>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; }
+        public string Code { get; set; }
         public Nullable<bool> Status { get; set; }
+        public Nullable<int> Term { get; set; }
         public int CreatedBy { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public Nullable<int> ModifedBy { get; set; }
         public Nullable<System.DateTime> ModifiedAt { get; set; }
-        public string Code { get; set; }
     
         public virtual User User { get; set; }
+        public virtual ICollection<Routine> Routines { get; set; }
         public virtual ICollection<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public virtual ICollection<TeacherAppointment> TeacherAppointments { get; set; }
-        public virtual ICollection<Routine> Routines { get; set; }
     }
 }

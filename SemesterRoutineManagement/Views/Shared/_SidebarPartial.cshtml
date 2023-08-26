@@ -30,18 +30,22 @@
 
             </ul>
         </li>*@
-                <li class="nav-item">
-                    <a href="/Course/Index" class="nav-link">
-                        <i class="fa fa-book nav-icon"></i>
-                        <p>Course</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Routine/Index" class="nav-link">
-                        <i class="fa fa-calendar-day nav-icon"></i>
-                        <p>Routine</p>
-                    </a>
-                </li>
+                @if (User.IsInRole("Teacher") || User.IsInRole("Student"))
+                {
+                    <li class="nav-item">
+                        <a href="/Course/Index" class="nav-link">
+                            <i class="fa fa-book nav-icon"></i>
+                            <p>Course</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Routine/Index" class="nav-link">
+                            <i class="fa fa-calendar-day nav-icon"></i>
+                            <p>Routine</p>
+                        </a>
+                    </li>
+                }
+
                 @if (User.IsInRole("SuperAdmin"))
                 {
                     <li class="nav-item">
@@ -90,6 +94,12 @@
                         <a href="/StudentCourseEnrollment/Index" class="nav-link">
                             <i class="fa fa-clipboard nav-icon"></i>
                             <p>Student Course Enrollment</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Routine/Index" class="nav-link">
+                            <i class="fa fa-calendar-day nav-icon"></i>
+                            <p>Routine</p>
                         </a>
                     </li>
                 }

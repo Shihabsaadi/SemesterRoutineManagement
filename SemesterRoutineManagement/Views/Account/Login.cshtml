@@ -30,14 +30,22 @@
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+            <div class="card-body login-card-body rounded   ">
                 @*<div class="overlay dark d-flex justify-content-center align-items-center">
-                    <i class="fas fa-2x fa-sync fa-spin"></i>
-                </div>*@
+            <i class="fas fa-2x fa-sync fa-spin"></i>
+        </div>*@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
+
+                    <!-- ... input fields and submit button ... -->
+
+                    if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert" role="alert">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    }
                     <div class="input-group mb-3">
                         @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter UserName" } })
                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
@@ -48,7 +56,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.PasswordFor(model => model.Password,  new { @class = "form-control", @placeholder = "Enter Password" } )
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Enter Password" })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -58,21 +66,21 @@
                     </div>
                     <div class="row">
                         @*<div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>*@
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">
+                            Remember Me
+                        </label>
+                    </div>
+                </div>*@
                         <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <div class="btn btn-block">
+                            <button type="submit" class="btn btn-primary">Log In</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 }
-                
+
             </div>
             <!-- /.login-card-body -->
         </div>

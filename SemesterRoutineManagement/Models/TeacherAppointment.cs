@@ -19,7 +19,7 @@ namespace SemesterRoutineManagement.Models
         public int CourseId { get; set; }
         public Nullable<bool> Status { get; set; }
     
-        public virtual Course Course { get; set; }
         public virtual User User { get; set; }
+        public virtual Course Course { get; set; }
     }
 }
