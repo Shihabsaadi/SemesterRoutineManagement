@@ -327,12 +327,14 @@ namespace SemesterRoutineManagement.Controllers
                                 {
                                     var teacherConflict = false;
                                     var availableTeachersInCourse = availableTeachers.Where(x => x.CourseId == course.Id).ToList();
-                                    teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.Id &&((x.StartTime==timeSlot.Start && x.DayId == weekDay.Id) || (x.RoomId == room.Id && x.StartTime==timeSlot.Start) || (x.RoomId == room.Id && x.DayId == weekDay.Id))) ? true : false;
+                                    teacherIndex = random.Next(availableTeachersInCourse.Count); // Start with the first room in the list
+                                    teacher = availableTeachersInCourse[teacherIndex];
+                                    teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.TeacherId && x.StartTime==timeSlot.Start && x.DayId == weekDay.Id) ? true : false;
                                     while (teacherConflict)
                                     {
                                         teacherIndex = random.Next(availableTeachersInCourse.Count); // Start with the first room in the list
                                         teacher = availableTeachersInCourse[teacherIndex];
-                                        teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.Id && ((x.StartTime == timeSlot.Start && x.DayId == weekDay.Id) || (x.RoomId == room.Id && x.StartTime == timeSlot.Start) || (x.RoomId == room.Id && x.DayId == weekDay.Id))) ? true : false;
+                                        teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.TeacherId && x.StartTime == timeSlot.Start && x.DayId == weekDay.Id) ? true : false;
                                     }
                                     generatedRoutine.Add(new RoutineModel
                                     {

@@ -3,7 +3,6 @@
     {
         sessionService.getSession().then(function (response) {
             $scope.SessionList = response.data;
-            console.log($scope.SessionList)
         })
     }
     $scope.ToDate = function (value) {
@@ -105,9 +104,9 @@
                     {
                         Id: $scope.Id,
                         Semester: $scope.Semester,
-                        Date: $scope.Date,
+                        Date: $scope.Date.value,
                         Status:$scope.Status
-                    }
+                }
                 sessionService.saveSession(data).then(function (response) {
 
                     if (response.data.Success) {
