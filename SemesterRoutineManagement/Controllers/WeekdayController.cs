@@ -21,8 +21,8 @@ namespace SemesterRoutineManagement.Controllers
 
         public JsonResult GetWeekdayList()
         {
-            List<WeekDay> Room = db.WeekDays.ToList();
-            List<WeekDayModel> vm = Room.Select(x => new WeekDayModel
+            List<WeekDay> weeks = db.WeekDays.ToList();
+            List<WeekDayModel> vm = weeks.Select(x => new WeekDayModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -37,7 +37,8 @@ namespace SemesterRoutineManagement.Controllers
            
             var Message = "Action Failed";
             bool Success = false;
-
+            if(db.WeekDays.Any(x=>x.Id!=model.Id && (x.Name==model.Name || x.ShortName == model.ShortName || x.Sort ==model.Sort)))
+                return Json(new { Message = "Already exists!!!" , Success = Success }, JsonRequestBehavior.AllowGet);
             try
             {
                 if (model.Id > 0)

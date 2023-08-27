@@ -137,6 +137,7 @@
     <Compile Include="Controllers\TeacherAppointmentController.cs" />
     <Compile Include="Controllers\TimeSpanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WeekdayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,6 +198,7 @@
     <Compile Include="Models\WeekDay.cs">
       <DependentUpon>SemesterRoutineManagementDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WeekDayModel.cs" />
     <Compile Include="MyRoleProvider\SiteRole.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1902,6 +1904,8 @@
     <Content Include="Scripts\Angular\Course\CourseService.js" />
     <Content Include="Scripts\Angular\Routine\RoutineController.js" />
     <Content Include="Scripts\Angular\Routine\RoutineService.js" />
+    <Content Include="Scripts\Angular\WeekDay\WeekDayController.js" />
+    <Content Include="Scripts\Angular\WeekDay\WeekDayService.js" />
     <Content Include="Scripts\Angular\Session\SessionController.js" />
     <Content Include="Scripts\Angular\Session\SessionService.js" />
     <Content Include="Scripts\Angular\StudentCourseEnrollment\StudentCourseEnrollmentController.js" />
@@ -2906,6 +2910,7 @@
     <Content Include="Views\Session\Index.cshtml" />
     <Content Include="Views\StudentCourseEnrollment\Index.cshtml" />
     <Content Include="Views\Routine\Index.cshtml" />
+    <Content Include="Views\Weekday\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

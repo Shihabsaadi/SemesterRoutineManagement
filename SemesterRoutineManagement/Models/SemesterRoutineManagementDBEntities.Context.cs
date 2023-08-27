@@ -30,10 +30,10 @@ namespace SemesterRoutineManagement.Models
         public DbSet<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public DbSet<TeacherAppointment> TeacherAppointments { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Routine> Routines { get; set; }
         public DbSet<TimeSpan> TimeSpans { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<WeekDay> WeekDays { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Routine> Routines { get; set; }
     }
 }

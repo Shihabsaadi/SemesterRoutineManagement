@@ -1,8 +1,9 @@
 ﻿app.controller('routineCtrl', function ($scope, routineService) {
+    $scope.semesterList = [];
     var GenerateRoutine = function ()
     {
         data = {
-            sessionOf: $scope.availableSession+1
+            sessionOf: $scope.availableSession.Semester +1
         }
         routineService.GenerateRoutine(data).then(function (response) {
             $scope.RoutineList = response.data;
@@ -39,7 +40,7 @@
             case "SaveRoutine":
                 data =
                 {
-                    SessionId: $scope.availableSession,
+                    SessionId: $scope.availableSession.Id,
                     Routines: $scope.RoutineList
                 }
                 routineService.Save(data).then(function (response) {
@@ -98,13 +99,29 @@
     $scope.onChange = function (expression, obj) {
         switch (expression) {
             case "getRoutines":
+                console.log($scope.Semester)
                 data =
                 {
-                    SessionId: $scope.Session,
+                    SessionId: $scope.Session.Id,
                 }
                 routineService.getRoutine(data).then(function (response) {
                     $scope.RoutineListBySession=response.data
                 });
+                break;
+            case "getSemester":
+                if ($scope.Session.Semester == 0) {
+                    $scope.semesterList = ['FirstYearFirstSemester',
+                        'SecondYearFirstSemester',
+                        'ThirdYearFirstSemester',
+                        'FourthYearFirstSemester']
+                }
+                else {
+                    $scope.semesterList
+                    = ['FirstYearSecondSemester',
+                       'SecondYearSecondSemester',
+                       'ThirdYearSecondSemester',
+                       'FourthYearSecondSemester']
+                }
                 break;
             case "Generate":
                 GenerateRoutine();

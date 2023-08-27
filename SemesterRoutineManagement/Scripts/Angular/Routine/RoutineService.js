@@ -10,7 +10,7 @@
         return $http.post("/Routine/GetRoutineList", JSON.stringify(data));
     }
     this.GenerateRoutine = function (data) {
-        return $http.post("/Routine/Test", JSON.stringify(data));
+        return $http.post("/Routine/GenerateRoutine", JSON.stringify(data));
     }
     this.Save = function (data) {
         return $http.post('/Routine/Save', JSON.stringify(data))

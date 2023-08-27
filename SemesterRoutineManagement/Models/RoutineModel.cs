@@ -22,7 +22,7 @@ namespace SemesterRoutineManagement.Models
         public string SessionName { get; set; }
         public int RoomId { get; set; }
         public string RoomNo { get; set; }
-        public int? Term { get; set; }
+        public int Term { get; set; }
         public string TermName { get; set; }
         public List<RoutineModel> Routines { get; set; }
         public int Sort { get; set; }
