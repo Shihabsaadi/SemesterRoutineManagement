@@ -264,13 +264,14 @@ namespace SemesterRoutineManagement.Controllers
                 var availableTeachers = teacherCourses.ToList();
                 var availableCourses = courses.ToList();
                 var availableTimeSpans = timeSpans.ToList();
+                var terms = sessionOf == 1 ? new List<int> { 0, 2, 4, 6 } : new List<int> { 1, 3, 5, 7 };
                 try
                 {
                     foreach (var timeSlot in timeSpans)
                     {
                         var availableRooms = rooms.ToList();
 
-                        foreach (var term in new List<int> { 0, 2, 4, 6 })
+                        foreach (var term in terms)
                         {
                             var termCourses = courses.Where(course => course.Term == term).ToList();
 
@@ -302,6 +303,7 @@ namespace SemesterRoutineManagement.Controllers
                                 var removedterm = course.Term;
                                 var courseInvocked = false;
                                 var maxClassInADay = false;
+
                                 if (generatedRoutine.Where(x => x.Term == course.Term && x.DayId == weekDay.Id).Count() == 5)
                                 {
                                     maxClassInADay = true;
@@ -311,7 +313,7 @@ namespace SemesterRoutineManagement.Controllers
                                 {
                                     while (courseConflict)
                                     {
-                                        courseIndex = random.Next(getTermCourse.Count); // Start with the first room in the list
+                                        courseIndex = random.Next(getTermCourse.Count);
                                         course = getTermCourse[courseIndex];
                                         courseConflict = generatedRoutine.Any(x => x.CourseId == course.Id) ? true : false;
                                     }
@@ -323,6 +325,15 @@ namespace SemesterRoutineManagement.Controllers
 
                                 if (!courseInvocked && !maxClassInADay)
                                 {
+                                    var teacherConflict = false;
+                                    var availableTeachersInCourse = availableTeachers.Where(x => x.CourseId == course.Id).ToList();
+                                    teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.Id &&((x.StartTime==timeSlot.Start && x.DayId == weekDay.Id) || (x.RoomId == room.Id && x.StartTime==timeSlot.Start) || (x.RoomId == room.Id && x.DayId == weekDay.Id))) ? true : false;
+                                    while (teacherConflict)
+                                    {
+                                        teacherIndex = random.Next(availableTeachersInCourse.Count); // Start with the first room in the list
+                                        teacher = availableTeachersInCourse[teacherIndex];
+                                        teacherConflict = generatedRoutine.Any(x => x.TeacherId == teacher.Id && ((x.StartTime == timeSlot.Start && x.DayId == weekDay.Id) || (x.RoomId == room.Id && x.StartTime == timeSlot.Start) || (x.RoomId == room.Id && x.DayId == weekDay.Id))) ? true : false;
+                                    }
                                     generatedRoutine.Add(new RoutineModel
                                     {
                                         DayId = weekDay.Id,
@@ -331,7 +342,9 @@ namespace SemesterRoutineManagement.Controllers
                                         StartTime = timeSlot.Start,
                                         EndTime = timeSlot.End,
                                         TeacherName = teacher.Teacher,
-                                        CourseName = course.Name /*course.Name*/,
+                                        CourseName = course.Name,
+                                        CourseCode = course.Code,
+                                        TermName=((Term)course.Term).ToString(),
                                         TimeSpanId = timeSlot.Id,
                                         TeacherId = teacher.TeacherId,
                                         CourseId = course.Id/* course.Id*/,

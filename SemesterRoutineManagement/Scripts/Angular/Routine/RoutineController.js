@@ -2,7 +2,7 @@
     var GenerateRoutine = function ()
     {
         data = {
-            sessionOf:1
+            sessionOf: $scope.availableSession+1
         }
         routineService.GenerateRoutine(data).then(function (response) {
             $scope.RoutineList = response.data;
@@ -18,9 +18,11 @@
     var getAvailableSessionList = function () {
         routineService.getAvailableSession().then(function (response) {
             $scope.availableSessionList = response.data;
+            console.log('response.data', response.data)
         })
     }
-    
+    getAvailableSessionList()
+
     $scope.onClick = function (expression, obj) {
         var data = []
         switch (expression) {
@@ -103,6 +105,9 @@
                 routineService.getRoutine(data).then(function (response) {
                     $scope.RoutineListBySession=response.data
                 });
+                break;
+            case "Generate":
+                GenerateRoutine();
                 break;
             default:
         }

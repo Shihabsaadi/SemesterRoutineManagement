@@ -9,6 +9,7 @@ namespace SemesterRoutineManagement.Models
     {
         public int Id { get; set; }
         public string CourseName { get; set; }
+        public string CourseCode { get; set; }
         public int CourseId { get; set; }
         public string TeacherName { get; set; }
         public int TeacherId { get; set; }
@@ -22,6 +23,7 @@ namespace SemesterRoutineManagement.Models
         public int RoomId { get; set; }
         public string RoomNo { get; set; }
         public int? Term { get; set; }
+        public string TermName { get; set; }
         public List<RoutineModel> Routines { get; set; }
         public int Sort { get; set; }
     }

@@ -31,7 +31,7 @@
                                 <th>TeacherName</th>
                                 @if (User.IsInRole("SuperAdmin"))
                                 {
-                                    <th width="1%" class="text-center"><button data-toggle="modal" href="#routine-modal" title="Create Routine" class="btn btn-sm btn-primary" ng-click="onClick('Generate')"><i class="fa fa-plus-circle"></i></button></th>}
+                                    <th width="1%" class="text-center"><button data-toggle="modal" href="#routine-modal" title="Create Routine" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i></button></th>}
                                 </tr>
                         </thead>
                         <tbody>
@@ -74,7 +74,7 @@
     </div>
     <!-- /.row -->
     <div class="modal fade" id="routine-modal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Create Routine</h4>
@@ -87,17 +87,17 @@
                         <div class="card-body">
                             <label class="col-sm-3 control-label">Session</label>
                             <div class="col-sm-12">
-                                <select class="form-control" ng-model="availableSession" ng-options="item.Id as item.Name for item in availableSessionList">
+                                <select class="form-control" ng-model="availableSession" ng-options="item.Semester as item.Name for item in availableSessionList" ng-change="onChange('Generate')">
                                 </select>
                             </div>
                             <br />
-                            <div class="table table-responsive">
+                            <div class="table" ng-show="RoutineList!=null">
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th width="1%">Sl</th>
                                             <th>Day</th>
-                                            <th>CourseName</th>
+                                            <th>CourseCode</th>
                                             <th>Term</th>
                                             <th>StartTime</th>
                                             <th>EndTime</th>
@@ -113,10 +113,10 @@
                                                 {{item.Day}}
                                             </td>
                                             <td>
-                                                {{item.CourseName}}
+                                                {{item.CourseCode}}
                                             </td>
                                             <td>
-                                                {{item.Term}}
+                                                {{item.TermName}}
                                             </td>
                                             <td>
                                                 {{item.StartTime}}
@@ -145,7 +145,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveRoutine')" ng-disabled="!Session && RoutineList!=null"><i class="fa fa-save"></i></button>
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveRoutine')" ng-show="RoutineList!=null"><i class="fa fa-save"></i></button>
                 </div>
             </div>
             <!-- /.modal-content -->

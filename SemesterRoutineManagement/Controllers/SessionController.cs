@@ -40,6 +40,7 @@ namespace SemesterRoutineManagement.Controllers
             List<SessionModel> vm = session.Select(x => new SessionModel
             {
                 Date = x.Date,
+                Name = x.Name,
                 Semester = (Semester)x.Semester,
                 Id = x.Id,
                 Status = x.Status
