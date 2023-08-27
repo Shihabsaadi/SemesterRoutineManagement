@@ -9,7 +9,8 @@ namespace SemesterRoutineManagement.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public Semester Semester { get; set; }
         public bool? Status { get; set; }
-
     }
 }

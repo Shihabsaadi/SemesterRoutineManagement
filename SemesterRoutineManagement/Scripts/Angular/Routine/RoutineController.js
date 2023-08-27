@@ -1,7 +1,10 @@
 ﻿app.controller('routineCtrl', function ($scope, routineService) {
     var GenerateRoutine = function ()
     {
-        routineService.GenerateRoutine().then(function (response) {
+        data = {
+            sessionOf:1
+        }
+        routineService.GenerateRoutine(data).then(function (response) {
             $scope.RoutineList = response.data;
             console.log($scope.RoutineList)
         })

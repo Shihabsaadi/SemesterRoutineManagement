@@ -25,7 +25,7 @@ namespace SemesterRoutineManagement.Controllers
             List<Routine> Routines = db.Routines.ToList();
             if (obj.Role == "SuperAdmin")
             {
-             vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
+                vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
                 {
                     Id = x.Id,
                     SessionName = x.Session.Name,
@@ -40,7 +40,7 @@ namespace SemesterRoutineManagement.Controllers
             }
             else if (obj.Role == "Teacher")
             {
-                Routines = db.Routines.Where(x=>x.TeacherId==obj.Id).ToList();
+                Routines = db.Routines.Where(x => x.TeacherId == obj.Id).ToList();
                 vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
                 {
                     Id = x.Id,
@@ -79,14 +79,14 @@ namespace SemesterRoutineManagement.Controllers
             List<Course> courses = db.Courses.Where(x => x.Status == true && (x.Term == ((int)Term.FirstYearFirstSemester)
             || x.Term == ((int)Term.SecondYearFirstSemester) || x.Term == ((int)Term.ThirdYearFirstSemester) || x.Term == ((int)Term.FourthYearFirstSemester)
             )).ToList();            //courses=Shuffle(courses);
-            var courseIds=courses.Select(x=>x.Id).ToList();
+            var courseIds = courses.Select(x => x.Id).ToList();
 
-            var weekDays= db.WeekDays.Where(x=>x.Status==true).Select(x => new
+            var weekDays = db.WeekDays.Where(x => x.Status == true).Select(x => new
             {
-                Id=x.Id,
-                Name=x.Name,
-                Sort=x.Sort
-            }).OrderBy(s=>s.Sort).ToList();
+                Id = x.Id,
+                Name = x.Name,
+                Sort = x.Sort
+            }).OrderBy(s => s.Sort).ToList();
 
             var rooms = db.Rooms.Where(x => x.Status == true).Select(x => new
             {
@@ -105,8 +105,8 @@ namespace SemesterRoutineManagement.Controllers
             var teacherCourses = db.TeacherAppointments.Where(x => courseIds.Contains(x.CourseId)).Select(x => new
             {
                 TeacherId = x.TeacherId,
-                Teacher=x.User.Name,
-                Course=x.Course.Name,
+                Teacher = x.User.Name,
+                Course = x.Course.Name,
                 CourseId = x.CourseId,
                 Id = x.Id
             }).ToList();
@@ -114,9 +114,9 @@ namespace SemesterRoutineManagement.Controllers
             List<RoutineModel> generatedRoutine = new List<RoutineModel>();
             Random random = new Random();
 
-            foreach (var weekDay in weekDays)
+            foreach (var timeSpan in timeSpans)
             {
-                foreach (var timeSpan in timeSpans)
+                foreach (var weekDay in weekDays)
                 {
                     var availableTeachers = teacherCourses.ToList();
                     var availableCourses = courses.ToList();
@@ -139,7 +139,7 @@ namespace SemesterRoutineManagement.Controllers
                             /*routine.CourseId == course.Id*/))
                         {
                             var room = rooms[random.Next(rooms.Count)];
-                            if(!generatedRoutine.Any(x=>x.DayId==weekDay.Id && x.CourseId== teacher.CourseId/* course.Id*/))
+                            if (!generatedRoutine.Any(x => x.DayId == weekDay.Id && x.CourseId == teacher.CourseId/* course.Id*/))
                             {
                                 if (!generatedRoutine.Any(x => x.DayId == weekDay.Id && x.TimeSpanId == timeSpan.Id && x.RoomId == room.Id))
                                 {
@@ -154,14 +154,14 @@ namespace SemesterRoutineManagement.Controllers
                                                 StartTime = timeSpan.Start,
                                                 EndTime = timeSpan.End,
                                                 TeacherName = teacher.Teacher,
-                                                CourseName =teacher.Course /*course.Name*/,
+                                                CourseName = teacher.Course /*course.Name*/,
                                                 TimeSpanId = timeSpan.Id,
                                                 TeacherId = teacher.TeacherId,
-                                                CourseId =teacher.CourseId/* course.Id*/,
+                                                CourseId = teacher.CourseId/* course.Id*/,
                                                 RoomId = room.Id,
                                                 RoomNo = room.No
                                             });
-                                            
+
                                         }
                                     }
                                 }
@@ -174,33 +174,13 @@ namespace SemesterRoutineManagement.Controllers
                 }
             }
 
-            //foreach (var weekday in weekdays)
-            //{
-            //    foreach (var timeSpan in timeSpans)
-            //    {
-            //        foreach (var course in courses)
-            //        {
-            //          foreach (var room in rooms)
-            //            {
-            //                if (routineModels.Any(x => x.RoomId == room.Id && x.CourseId == course.Id && x.StartTime == timeSpan.Start && x.EndTime == timeSpan.End))
-            //                {
-
-            //                }
-            //                else
-            //                {
-
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
 
             return Json(generatedRoutine, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Save(RoutineModel model)
         {
             var Message = "Action Failed";
-            bool Success=false;
+            bool Success = false;
             try
             {
                 Routine RoutineDB = new Routine();
@@ -221,11 +201,11 @@ namespace SemesterRoutineManagement.Controllers
             catch (Exception ex)
             {
                 Message = ex.Message;
-                Success=false;
+                Success = false;
             }
-            
 
-            return Json(new { Message = Message,Success=Success }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { Message = Message, Success = Success }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteRoutine(RoutineModel model)
         {
@@ -236,10 +216,148 @@ namespace SemesterRoutineManagement.Controllers
             db.SaveChanges();
             return Json(new { Message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
         }
-        //static List<T> Shuffle<T>(List<T> list)
-        //{
-        //    Random random = new Random();
-        //    return list.OrderBy(x => random.Next()).ToList();
-        //}
+        public JsonResult Test(int sessionOf)
+        {
+            var courses = new List<Course>();
+            courses = sessionOf == 1 ? db.Courses.Where(x => x.Status == true && (x.Term == ((int)Term.FirstYearFirstSemester)
+           || x.Term == ((int)Term.SecondYearFirstSemester) || x.Term == ((int)Term.ThirdYearFirstSemester) || x.Term == ((int)Term.FourthYearFirstSemester)
+           )).OrderBy(x => x.Term).ToList() : db.Courses.Where(x => x.Status == true && (x.Term == ((int)Term.FirstYearSecondSemester)
+           || x.Term == ((int)Term.SecondYearSecondSemester) || x.Term == ((int)Term.ThirdYearSecondSemester) || x.Term == ((int)Term.FourthYearSecondSemester)
+           )).OrderBy(x => x.Term).ToList();            //courses=Shuffle(courses);
+            var courseIds = courses.Select(x => x.Id).ToList();
+
+            var weekDays = db.WeekDays.Where(x => x.Status == true).Select(x => new
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Sort = x.Sort
+            }).OrderBy(s => s.Sort).ToList();
+
+            var rooms = db.Rooms.Where(x => x.Status == true).Select(x => new
+            {
+                Id = x.Id,
+                No = x.No
+            }).ToList();
+
+            var timeSpans = db.TimeSpans.Select(x => new
+            {
+                Id = x.Id,
+                Start = x.startTime,
+                End = x.endTime,
+                Sort = x.sort
+            }).OrderBy(s => s.Sort).ToList();
+
+            var teacherCourses = db.TeacherAppointments.Where(x => courseIds.Contains(x.CourseId)).Select(x => new
+            {
+                TeacherId = x.TeacherId,
+                Teacher = x.User.Name,
+                Course = x.Course.Name,
+                CourseId = x.CourseId,
+                Id = x.Id
+            }).ToList();
+            //List<RoutineModel> routineModels = new List<RoutineModel>();
+            List<RoutineModel> generatedRoutine = new List<RoutineModel>();
+            Random random = new Random();
+
+            foreach (var weekDay in weekDays)
+            {
+                var availableTeachers = teacherCourses.ToList();
+                var availableCourses = courses.ToList();
+                var availableTimeSpans = timeSpans.ToList();
+                try
+                {
+                    foreach (var timeSlot in timeSpans)
+                    {
+                        var availableRooms = rooms.ToList();
+
+                        foreach (var term in new List<int> { 0, 2, 4, 6 })
+                        {
+                            var termCourses = courses.Where(course => course.Term == term).ToList();
+
+                            if (termCourses.Count > 0 && availableRooms.Count > 0 && teacherCourses.Count > 0)
+                            {
+                                var teacherIndex = random.Next(availableTeachers.Count);
+                                //var courseIndex = random.Next(availableCourses.Count);
+                                var timeSpanIndex = random.Next(availableTimeSpans.Count);
+
+                                var teacher = availableTeachers[teacherIndex];
+                                //var course = availableCourses[courseIndex];
+                                var _timeSpan = availableTimeSpans[timeSpanIndex];
+
+                                var courseIndex = random.Next(termCourses.Count); // Start with the first course in the list
+                                var roomIndex = random.Next(availableRooms.Count); // Start with the first room in the list
+                                var room = availableRooms[roomIndex];
+
+                                var roomConflict = false;
+                                roomConflict = generatedRoutine.Any(x => x.StartTime == timeSlot.Start && x.RoomId == room.Id) ? true : false;
+                                while (roomConflict)
+                                {
+                                    roomIndex = random.Next(availableRooms.Count); // Start with the first room in the list
+                                    room = availableRooms[roomIndex];
+                                    roomConflict = generatedRoutine.Any(x => x.StartTime == timeSlot.Start && x.RoomId == room.Id && x.DayId== weekDay.Id) ? true : false;
+                                }
+                                var course = termCourses[courseIndex];
+                                var courseConflict = false;
+                                courseConflict = generatedRoutine.Any(x => x.CourseId==course.Id) ? true : false;
+                                var removedterm = course.Term;
+                                var courseInvocked = false;
+                                var maxClassInADay = false;
+                                if (generatedRoutine.Where(x => x.Term == course.Term && x.DayId == weekDay.Id).Count() == 5)
+                                {
+                                    maxClassInADay = true;
+                                }
+                                var getTermCourse = availableCourses.Where(x => x.Term == removedterm).ToList();
+                                if (getTermCourse.Count() != generatedRoutine.Where(x => x.Term == removedterm).Count())
+                                {
+                                    while (courseConflict)
+                                    {
+                                        courseIndex = random.Next(getTermCourse.Count); // Start with the first room in the list
+                                        course = getTermCourse[courseIndex];
+                                        courseConflict = generatedRoutine.Any(x => x.CourseId == course.Id) ? true : false;
+                                    }
+                                }
+                                else
+                                {
+                                    courseInvocked = true;
+                                }
+
+                                if (!courseInvocked && !maxClassInADay)
+                                {
+                                    generatedRoutine.Add(new RoutineModel
+                                    {
+                                        DayId = weekDay.Id,
+                                        Day = weekDay.Name,
+                                        Term = course.Term,
+                                        StartTime = timeSlot.Start,
+                                        EndTime = timeSlot.End,
+                                        TeacherName = teacher.Teacher,
+                                        CourseName = course.Name /*course.Name*/,
+                                        TimeSpanId = timeSlot.Id,
+                                        TeacherId = teacher.TeacherId,
+                                        CourseId = course.Id/* course.Id*/,
+                                        RoomId = room.Id,
+                                        RoomNo = room.No
+                                    });
+                                    // Update the indices to move to the next course and room
+                                    courseIndex = (courseIndex + 1) % termCourses.Count;
+                                    roomIndex = (roomIndex + 1) % availableRooms.Count;
+                                    teacherIndex = (teacherIndex + 1) % teacherCourses.Count;
+                                }
+                                   
+                          
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            return Json(generatedRoutine, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

@@ -24,7 +24,9 @@ namespace SemesterRoutineManagement.Controllers
             List<Session> session = db.Sessions.ToList();
             List<SessionModel> vm = session.Select(x => new SessionModel
             {
+                Date = x.Date,
                 Name = x.Name,
+                Semester = (Semester)x.Semester,
                 Id = x.Id,
                 Status = x.Status
             }).ToList();
@@ -37,7 +39,8 @@ namespace SemesterRoutineManagement.Controllers
             List<Session> session = db.Sessions.Where(x=> !sessionIds.Contains(x.Id)).ToList();
             List<SessionModel> vm = session.Select(x => new SessionModel
             {
-                Name = x.Name,
+                Date = x.Date,
+                Semester = (Semester)x.Semester,
                 Id = x.Id,
                 Status = x.Status
             }).ToList();
@@ -50,11 +53,18 @@ namespace SemesterRoutineManagement.Controllers
             bool Success = false;
             try
             {
+                var getYearName = model.Date.ToString("yy") + ((int)model.Semester + 1).ToString();
+                if (db.Sessions.Any(x => x.Name.Contains(getYearName)))
+                {
+                    return Json(new { Message = "Already Exists!!!", Success = Success }, JsonRequestBehavior.AllowGet);
+                }
                 if (model.Id > 0)
                 {
                     Session updateDB = db.Sessions.Find(model.Id);
-                    updateDB.Name = model.Name;
+                    updateDB.Name = getYearName;
                     updateDB.Status = model.Status;
+                    updateDB.Semester = (int)model.Semester;
+                    updateDB.Date = model.Date;
                     db.Entry(updateDB).State = EntityState.Modified;
                     db.SaveChanges();
                     Message = model.Name + " Updated Successfully";
@@ -62,8 +72,10 @@ namespace SemesterRoutineManagement.Controllers
                 else
                 {
                     Session sessionDB = new Session();
-                    sessionDB.Name = model.Name;
+                    sessionDB.Name = getYearName;
                     sessionDB.Status = true;
+                    sessionDB.Semester = (int)model.Semester;
+                    sessionDB.Date = model.Date;
                     db.Sessions.Add(sessionDB);
                     db.SaveChanges();
                     Message = model.Name + " Added Successfully";

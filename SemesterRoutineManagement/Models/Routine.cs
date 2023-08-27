@@ -23,10 +23,10 @@ namespace SemesterRoutineManagement.Models
         public int TeacherId { get; set; }
     
         public virtual Room Room { get; set; }
-        public virtual Session Session { get; set; }
         public virtual User User { get; set; }
         public virtual TimeSpan TimeSpan { get; set; }
         public virtual Course Course { get; set; }
         public virtual WeekDay WeekDay { get; set; }
+        public virtual Session Session { get; set; }
     }
 }

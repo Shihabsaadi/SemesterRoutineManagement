@@ -17,5 +17,10 @@ namespace SemesterRoutineManagement.Models
             FourthYearFirstSemester,
             FourthYearSecondSemester,
         }
+    public enum Semester
+    {
+        FirstSemester,
+        SecondSemester
+    }
 
 }

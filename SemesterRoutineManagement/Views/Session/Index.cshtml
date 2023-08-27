@@ -58,13 +58,19 @@
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-sm-3 control-label">Name</label>
-                                <div class="col-sm-9">
-                                    <input ng-model="Name" type="text" class="form-control" placeholder="Name">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Date</label>
+                                <div class="col-sm-12">
+                                    <input ng-model="Date.value" type="datetime-local" class="form-control" placeholder="Date">
+                                </div>
+                                <label class="col-sm-3 control-label">Semester</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="Semester">
+                                        <option ng-repeat="item in semesterList" value="{{item}}"> {{item}}</option>
+                                    </select>
                                 </div>
                                 <label class="col-sm-3 control-label">Active</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-12">
                                     <input ng-model="Status" type="checkbox">
                                 </div>
                             </div>

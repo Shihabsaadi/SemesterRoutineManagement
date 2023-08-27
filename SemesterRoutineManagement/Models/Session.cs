@@ -16,15 +16,17 @@ namespace SemesterRoutineManagement.Models
     {
         public Session()
         {
-            this.StudentCourseEnrollments = new HashSet<StudentCourseEnrollment>();
             this.Routines = new HashSet<Routine>();
+            this.StudentCourseEnrollments = new HashSet<StudentCourseEnrollment>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public System.DateTime Date { get; set; }
+        public int Semester { get; set; }
         public Nullable<bool> Status { get; set; }
     
-        public virtual ICollection<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public virtual ICollection<Routine> Routines { get; set; }
+        public virtual ICollection<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
     }
 }
