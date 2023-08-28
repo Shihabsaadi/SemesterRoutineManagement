@@ -16,7 +16,6 @@ namespace SemesterRoutineManagement.Models
     {
         public Course()
         {
-            this.StudentCourseEnrollments = new HashSet<StudentCourseEnrollment>();
             this.TeacherAppointments = new HashSet<TeacherAppointment>();
             this.Routines = new HashSet<Routine>();
         }
@@ -32,7 +31,6 @@ namespace SemesterRoutineManagement.Models
         public Nullable<System.DateTime> ModifiedAt { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ICollection<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public virtual ICollection<TeacherAppointment> TeacherAppointments { get; set; }
         public virtual ICollection<Routine> Routines { get; set; }
     }

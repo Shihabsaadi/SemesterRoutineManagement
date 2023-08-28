@@ -27,7 +27,6 @@ namespace SemesterRoutineManagement.Models
     
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
         public DbSet<TeacherAppointment> TeacherAppointments { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<TimeSpan> TimeSpans { get; set; }
@@ -35,5 +34,6 @@ namespace SemesterRoutineManagement.Models
         public DbSet<WeekDay> WeekDays { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Routine> Routines { get; set; }
+        public DbSet<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
     }
 }

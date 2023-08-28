@@ -1,5 +1,4 @@
 ﻿app.controller('studentCourseEnrollmentCtrl', function ($scope, studentCourseEnrollmentService) {
-
     var getSessionList = function () {
         studentCourseEnrollmentService.getSession().then(function (response) {
             $scope.sessionList = response.data;
@@ -11,13 +10,13 @@
             $scope.courseList = response.data;
         })
     }
-    getCourseList()
    
     var getAvailableStudentList = function () {
         data = {
-            SessionId: $scope.Session,
-            CourseId: $scope.Course
+            SessionId: $scope.Session.Id,
+            Term: $scope.Semester.Id
         }
+        console.log('data', data)
         studentCourseEnrollmentService.getAvailableStudentList(data).then(function (response) {
             $scope.studentList = response.data;
         })
@@ -40,7 +39,7 @@
                 //$scope.Course = obj.CourseId
                 //$scope.Status = obj.Status
                 break;
-            case "SaveStudentCourseEnrollment":
+            case "SaveStudentEnrollment":
                 var selectedItems = $scope.studentList.filter(function (item) {
                     return item.Selected
                 }).map(function (item) {
@@ -49,8 +48,8 @@
 
                 data=
                     {
-                    SessionId: $scope.Session,
-                    CourseId: $scope.Course,
+                    SessionId: $scope.Session.Id,
+                    Term: $scope.Semester.Id,
                     Status: true,
                     StudentIds: selectedItems
                     }
@@ -127,7 +126,6 @@
             $scope.selectedItems = null
             getStudentCourseEnrollmentList()
             getSessionList()
-            getCourseList()
         }
     }
     $scope.onChange = function (expression, obj) {
@@ -136,7 +134,23 @@
             case "getAvailableStudents":
                 getAvailableStudentList();
                 break;
-            
+            case "getSemester":
+                console.log($scope.Session.Semester)
+                if ($scope.Session.Semester == 0) {
+                    $scope.semesterList = [{ Id:0, Name:'FirstYearFirstSemester' },
+                        { Id:2, Name:'SecondYearFirstSemester' },
+                        { Id:4, Name:'ThirdYearFirstSemester' },
+                        { Id:6, Name:'FourthYearFirstSemester' }]
+                }
+                else {
+                    $scope.semesterList
+                        = [
+                        { Id:1, Name:'FirstYearSecondSemester' },
+                        { Id:3, Name:'SecondYearSecondSemester' },
+                        { Id:5, Name:'ThirdYearSecondSemester' },
+                        { Id:7, Name:'FourthYearSecondSemester' }                    ]
+                }
+                break;
             default:
         }
         //var sync = function () {

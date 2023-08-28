@@ -51,7 +51,7 @@ namespace SemesterRoutineManagement.Controllers
             }
             else if (obj.Role == "Student")
             {
-                List<int> ids = db.StudentCourseEnrollments.Where(x => x.StudentId == obj.Id).Select(x => x.CourseId).ToList();
+                List<int> ids = db.StudentCourseEnrollments.Where(x => x.StudentId == obj.Id).Select(x => x.Term).ToList();
                 vm = courses.Where(x => ids.Contains(x.Id)).Select(x => new CourseModel
                 {
                     Name = x.Name,

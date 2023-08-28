@@ -9,11 +9,12 @@ namespace SemesterRoutineManagement.Models
     {
         public int Id { get; set; }
         public int StudentId { get; set; }
-        public int CourseId { get; set; }
+        public int Term { get; set; }
         public Nullable<bool> Status { get; set; }
         public int SessionId { get; set; }
         public List<int> StudentIds { get; set; }
         public string StudentName { get;set; }
+        public string TermName { get; set; }
         public string StudentPhone { get; set; }
         public string StudentEmail { get; set; }
         public string Course { get; set; }

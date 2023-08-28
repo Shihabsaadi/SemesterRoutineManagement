@@ -64,7 +64,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Term" Type="int" Nullable="false" />
           <Property Name="SessionId" Type="int" Nullable="false" />
           <Property Name="Status" Type="bit" />
         </EntityType>
@@ -194,18 +194,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentCourseEnrollment_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="1" />
-          <End Role="StudentCourseEnrollment" Type="Self.StudentCourseEnrollment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentCourseEnrollment">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StudentCourseEnrollment_Session">
           <End Role="Session" Type="Self.Session" Multiplicity="1" />
           <End Role="StudentCourseEnrollment" Type="Self.StudentCourseEnrollment" Multiplicity="*" />
@@ -293,10 +281,6 @@
             <End Role="WeekDay" EntitySet="WeekDay" />
             <End Role="Routine" EntitySet="Routine" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentCourseEnrollment_Course" Association="Self.FK_StudentCourseEnrollment_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollment" />
-          </AssociationSet>
           <AssociationSet Name="FK_StudentCourseEnrollment_Session" Association="Self.FK_StudentCourseEnrollment_Session">
             <End Role="Session" EntitySet="Session" />
             <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollment" />
@@ -337,20 +321,15 @@
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="StudentCourseEnrollments" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User" FromRole="User" ToRole="StudentCourseEnrollment" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TeacherAppointments" Relationship="SemesterRoutineMSDBModel.FK_TeacherAppointment_User" FromRole="User" ToRole="TeacherAppointment" />
           <NavigationProperty Name="Courses" Relationship="SemesterRoutineMSDBModel.FK_Course_User" FromRole="User" ToRole="Course" />
           <NavigationProperty Name="Routines" Relationship="SemesterRoutineMSDBModel.FK_Routine_User" FromRole="User" ToRole="Routine" />
+          <NavigationProperty Name="StudentCourseEnrollments" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User" FromRole="User" ToRole="StudentCourseEnrollment" />
         </EntityType>
         <EntityContainer Name="SemesterRoutineMSDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="StudentCourseEnrollments" EntityType="SemesterRoutineMSDBModel.StudentCourseEnrollment" />
-          <AssociationSet Name="FK_StudentCourseEnrollment_User" Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollments" />
-          </AssociationSet>
           <EntitySet Name="TeacherAppointments" EntityType="SemesterRoutineMSDBModel.TeacherAppointment" />
           <AssociationSet Name="FK_TeacherAppointment_User" Association="SemesterRoutineMSDBModel.FK_TeacherAppointment_User">
             <End Role="User" EntitySet="Users" />
@@ -364,19 +343,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Course" EntitySet="Courses" />
           </AssociationSet>
-          <AssociationSet Name="FK_StudentCourseEnrollment_Course" Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Course">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollments" />
-          </AssociationSet>
           <AssociationSet Name="FK_TeacherAppointment_Course" Association="SemesterRoutineMSDBModel.FK_TeacherAppointment_Course">
             <End Role="Course" EntitySet="Courses" />
             <End Role="TeacherAppointment" EntitySet="TeacherAppointments" />
           </AssociationSet>
           <EntitySet Name="Sessions" EntityType="SemesterRoutineMSDBModel.Session" />
-          <AssociationSet Name="FK_StudentCourseEnrollment_Session" Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session">
-            <End Role="Session" EntitySet="Sessions" />
-            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollments" />
-          </AssociationSet>
           <EntitySet Name="Routines" EntityType="SemesterRoutineMSDBModel.Routine" />
           <AssociationSet Name="FK_Routine_Course" Association="SemesterRoutineMSDBModel.FK_Routine_Course">
             <End Role="Course" EntitySet="Courses" />
@@ -402,32 +373,16 @@
             <End Role="WeekDay" EntitySet="WeekDays" />
             <End Role="Routine" EntitySet="Routines" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="StudentCourseEnrollment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User" FromRole="StudentCourseEnrollment" ToRole="User" />
-          <Property Name="SessionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Course" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Course" FromRole="StudentCourseEnrollment" ToRole="Course" />
-          <NavigationProperty Name="Session" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session" FromRole="StudentCourseEnrollment" ToRole="Session" />
-        </EntityType>
-        <Association Name="FK_StudentCourseEnrollment_User">
-          <End Type="SemesterRoutineMSDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="SemesterRoutineMSDBModel.StudentCourseEnrollment" Role="StudentCourseEnrollment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentCourseEnrollment">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          <EntitySet Name="StudentCourseEnrollments" EntityType="SemesterRoutineMSDBModel.StudentCourseEnrollment" />
+          <AssociationSet Name="FK_StudentCourseEnrollment_Session" Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session">
+            <End Role="Session" EntitySet="Sessions" />
+            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourseEnrollment_User" Association="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="StudentCourseEnrollment" EntitySet="StudentCourseEnrollments" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="TeacherAppointment">
           <Key>
             <PropertyRef Name="Id" />
@@ -485,7 +440,6 @@
           <Property Name="ModifedBy" Type="Int32" />
           <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="SemesterRoutineMSDBModel.FK_Course_User" FromRole="Course" ToRole="User" />
-          <NavigationProperty Name="StudentCourseEnrollments" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Course" FromRole="Course" ToRole="StudentCourseEnrollment" />
           <NavigationProperty Name="TeacherAppointments" Relationship="SemesterRoutineMSDBModel.FK_TeacherAppointment_Course" FromRole="Course" ToRole="TeacherAppointment" />
           <NavigationProperty Name="Routines" Relationship="SemesterRoutineMSDBModel.FK_Routine_Course" FromRole="Course" ToRole="Routine" />
         </EntityType>
@@ -512,18 +466,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_StudentCourseEnrollment_Course">
-          <End Type="SemesterRoutineMSDBModel.Course" Role="Course" Multiplicity="1" />
-          <End Type="SemesterRoutineMSDBModel.StudentCourseEnrollment" Role="StudentCourseEnrollment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentCourseEnrollment">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TeacherAppointment_Course">
           <End Type="SemesterRoutineMSDBModel.Course" Role="Course" Multiplicity="1" />
           <End Type="SemesterRoutineMSDBModel.TeacherAppointment" Role="TeacherAppointment" Multiplicity="*" />
@@ -545,21 +487,9 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Semester" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="StudentCourseEnrollments" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session" FromRole="Session" ToRole="StudentCourseEnrollment" />
           <NavigationProperty Name="Routines" Relationship="SemesterRoutineMSDBModel.FK_Routine_Session" FromRole="Session" ToRole="Routine" />
+          <NavigationProperty Name="StudentCourseEnrollments" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session" FromRole="Session" ToRole="StudentCourseEnrollment" />
         </EntityType>
-        <Association Name="FK_StudentCourseEnrollment_Session">
-          <End Type="SemesterRoutineMSDBModel.Session" Role="Session" Multiplicity="1" />
-          <End Type="SemesterRoutineMSDBModel.StudentCourseEnrollment" Role="StudentCourseEnrollment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Session">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StudentCourseEnrollment">
-              <PropertyRef Name="SessionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Routine">
           <Key>
             <PropertyRef Name="Id" />
@@ -651,7 +581,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="StudentCourseEnrollment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Term" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Session" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_Session" FromRole="StudentCourseEnrollment" ToRole="Session" />
+          <NavigationProperty Name="User" Relationship="SemesterRoutineMSDBModel.FK_StudentCourseEnrollment_User" FromRole="StudentCourseEnrollment" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_StudentCourseEnrollment_Session">
+          <End Type="SemesterRoutineMSDBModel.Session" Role="Session" Multiplicity="1" />
+          <End Type="SemesterRoutineMSDBModel.StudentCourseEnrollment" Role="StudentCourseEnrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentCourseEnrollment">
+              <PropertyRef Name="SessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourseEnrollment_User">
+          <End Type="SemesterRoutineMSDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="SemesterRoutineMSDBModel.StudentCourseEnrollment" Role="StudentCourseEnrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentCourseEnrollment">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -677,17 +643,6 @@
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StudentCourseEnrollments">
-            <EntityTypeMapping TypeName="SemesterRoutineMSDBModel.StudentCourseEnrollment">
-              <MappingFragment StoreEntitySet="StudentCourseEnrollment">
-                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -768,6 +723,17 @@
                 <ScalarProperty Name="TimeSpanId" ColumnName="TimeSpanId" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourseEnrollments">
+            <EntityTypeMapping TypeName="SemesterRoutineMSDBModel.StudentCourseEnrollment">
+              <MappingFragment StoreEntitySet="StudentCourseEnrollment">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

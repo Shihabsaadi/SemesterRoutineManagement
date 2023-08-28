@@ -16,12 +16,11 @@ namespace SemesterRoutineManagement.Models
     {
         public int Id { get; set; }
         public int StudentId { get; set; }
-        public int CourseId { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public int Term { get; set; }
         public int SessionId { get; set; }
+        public Nullable<bool> Status { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual Course Course { get; set; }
         public virtual Session Session { get; set; }
+        public virtual User User { get; set; }
     }
 }

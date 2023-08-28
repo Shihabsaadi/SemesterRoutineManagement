@@ -31,7 +31,7 @@ namespace SemesterRoutineManagement.Controllers
         }
         public JsonResult GetAvailableStudentList(StudentCourseEnrollmentModel model)
         {
-            List<int> studentIds=db.StudentCourseEnrollments.Where(s=>s.SessionId== model.SessionId && s.CourseId==model.CourseId).Select(x => x.StudentId).ToList();
+            List<int> studentIds=db.StudentCourseEnrollments.Where(s=>s.SessionId== model.SessionId && s.Term==model.Term).Select(x => x.StudentId).ToList();
             List<User> user = db.Users.Where(x => x.Role == "Student" && x.Status == true && !studentIds.Contains(x.Id)).ToList();
             List<UserModel> vm = user.Select(x => new UserModel
             {
@@ -42,16 +42,16 @@ namespace SemesterRoutineManagement.Controllers
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCourseList()
-        {
-            List<Course> courses = db.Courses.ToList();
-            List<CourseModel> vm = courses.Where(x => x.Status == true).Select(x => new CourseModel
-            {
-                Name = x.Name,
-                Id = x.Id,
-            }).ToList();
-            return Json(vm, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetTermList()
+        //{
+        //    List<Term> terms =new  List<Term>();
+        //    List<CourseModel> vm = courses.Where(x => x.Status == true).Select(x => new CourseModel
+        //    {
+        //        Name = x.Name,
+        //        Id = x.Id,
+        //    }).ToList();
+        //    return Json(vm, JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult GetStudentCourseEnrollmentList()
         {
             List<StudentCourseEnrollment> studentCourseEnrollments = db.StudentCourseEnrollments.ToList();
@@ -61,7 +61,8 @@ namespace SemesterRoutineManagement.Controllers
                 StudentName = x.User.Name,
                 StudentEmail = x.User.Email,
                 StudentPhone = x.User.Phone,
-                Course=x.Course.Name,
+                Term = x.Term,
+                TermName = ((Term)x.Term).ToString(),
                 Session=x.Session.Name
             }).ToList();
             return Json(vm, JsonRequestBehavior.AllowGet);
@@ -77,7 +78,7 @@ namespace SemesterRoutineManagement.Controllers
                 foreach (var studentId in model.StudentIds)
                 {
                     studentCourseEnrollment.StudentId = studentId;
-                    studentCourseEnrollment.CourseId = model.CourseId;
+                    studentCourseEnrollment.Term = model.Term;
                     studentCourseEnrollment.SessionId = model.SessionId;
                     studentCourseEnrollment.Status = true;
                     db.StudentCourseEnrollments.Add(studentCourseEnrollment);

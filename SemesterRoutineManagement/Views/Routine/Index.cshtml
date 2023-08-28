@@ -22,8 +22,11 @@
 
                         <label class="col-sm-1 control-label">Semester</label>
                         <div class="col-sm-3">
-                            <select class="form-control" ng-model="Semester" ng-options="item as item for item in semesterList" ng-change="onChange('getRoutines')">
+                            <select class="form-control" ng-model="Semester" ng-options="item as item for item in semesterList" >
                             </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success" ng-click="onClick('getRoutines')" ng-show="Session"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                     

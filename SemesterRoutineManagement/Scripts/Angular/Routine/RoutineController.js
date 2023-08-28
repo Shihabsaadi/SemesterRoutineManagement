@@ -34,6 +34,17 @@
             case "Regenerate":
                 GenerateRoutine();
                 break;
+            case "getRoutines":
+                console.log($scope.Semester)
+                data =
+                {
+                    SessionId: $scope.Session.Id,
+                    TermName: $scope.Semester
+                }
+                routineService.getRoutine(data).then(function (response) {
+                    $scope.RoutineListBySession = response.data
+                });
+                break;
             case "Remove":
                 $scope.RoutineList.splice(obj, 1);
                 break;
@@ -98,16 +109,7 @@
     }
     $scope.onChange = function (expression, obj) {
         switch (expression) {
-            case "getRoutines":
-                console.log($scope.Semester)
-                data =
-                {
-                    SessionId: $scope.Session.Id,
-                }
-                routineService.getRoutine(data).then(function (response) {
-                    $scope.RoutineListBySession=response.data
-                });
-                break;
+         
             case "getSemester":
                 if ($scope.Session.Semester == 0) {
                     $scope.semesterList = ['FirstYearFirstSemester',

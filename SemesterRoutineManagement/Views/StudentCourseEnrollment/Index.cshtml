@@ -17,7 +17,7 @@
                             <tr>
                                 <th width="1%">Sl</th>
                                 <th>Session</th>
-                                <th>Course</th>
+                                <th>Term</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -31,7 +31,7 @@
                                     {{item.Session}}
                                 </td>
                                 <td>
-                                    {{item.Course}}
+                                    {{item.TermName}}
                                 </td>
                                 <td>
                                     {{item.StudentName}}
@@ -61,7 +61,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Enroll Course</h4>
+                    <h4 class="modal-title">Enroll Student</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -70,19 +70,20 @@
                     <form class="form-horizontal">
                         <div class="card-body">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Course</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" ng-model="Course" ng-options="item.Id as item.Name for item in courseList" ng-change="onChange('getAvailableStudents')">
-                                    </select>
-                                </div>
+
                                 <label class="col-sm-3 control-label">Session</label>
                                 <div class="col-sm-12">
-                                    <select class="form-control" ng-model="Session" ng-options="item.Id as item.Name for item in sessionList" ng-change="onChange('getAvailableStudents')">
+                                    <select class="form-control" ng-model="Session" ng-options="item as item.Name for item in sessionList" ng-change="onChange('getSemester')">
                                     </select>
                                 </div>
-                                <label class="col-sm-3 control-label" ng-show="Course!=null && Session!=null">Student</label><br />
-                                <label class="control-label" ng-repeat="item in studentList" ng-show="Course!=null && Session!=null">
-                                    <input type="checkbox" ng-model="item.Selected">{{ item.Name }}
+                                <label class="col-sm-3 control-label">Semester</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="Semester" ng-options="item as item.Name for item in semesterList" ng-change="onChange('getAvailableStudents')">
+                                    </select>
+                                </div>
+                                <label class="col-sm-3 control-label" ng-show="Semester!=null && Session!=null">Student</label><br />
+                                <label class="control-label" ng-repeat="item in studentList" ng-show="Semester!=null && Session!=null">
+                                    <input type="checkbox" ng-model="item.Selected"> {{ item.Name }}
                                 </label>
 
                             </div>
@@ -92,7 +93,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveStudentCourseEnrollment')"><i class="fa fa-save"></i></button>
+                    <button data-toggle="tooltip" title="Save" type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="onClick('SaveStudentEnrollment')"><i class="fa fa-save"></i></button>
                 </div>
             </div>
             <!-- /.modal-content -->

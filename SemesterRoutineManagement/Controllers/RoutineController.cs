@@ -1,4 +1,5 @@
-﻿using SemesterRoutineManagement.Models;
+﻿using Microsoft.Ajax.Utilities;
+using SemesterRoutineManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,9 @@ namespace SemesterRoutineManagement.Controllers
             List<Routine> Routines = db.Routines.ToList();
             if (obj.Role == "SuperAdmin")
             {
-                vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
+                var query = Routines.Where(x => x.SessionId == model.SessionId).AsQueryable();
+                if (!string.IsNullOrEmpty(model.TermName)) query = query.Where(x => ((Term)x.Term).ToString() == model.TermName);
+                vm = query.Select(x => new RoutineModel
                 {
                     Id = x.Id,
                     SessionName = x.Session.Name,
@@ -38,6 +41,7 @@ namespace SemesterRoutineManagement.Controllers
                     TeacherName = x.User.Name,
                     Sort = x.WeekDay.Sort
                 }).OrderBy(x => x.Sort).ToList();
+               
             }
             else if (obj.Role == "Teacher")
             {
@@ -58,9 +62,12 @@ namespace SemesterRoutineManagement.Controllers
             }
             else if (obj.Role == "Student")
             {
-                List<int> ids = db.StudentCourseEnrollments.Where(x => x.StudentId == obj.Id).Select(x => x.CourseId).ToList();
-                Routines = db.Routines.Where(x => ids.Contains(x.CourseId)).ToList();
-                vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
+                List<int> ids = db.StudentCourseEnrollments.Where(x => x.StudentId == obj.Id).Select(x => x.Term).ToList();
+                var query = db.Routines.Where(x => ids.Contains(x.Term)).AsQueryable();
+                var ss = query.ToList();
+                if (!string.IsNullOrEmpty(model.TermName)) query = query.Where(x => ((Term)x.Term).ToString() == model.TermName);
+                query = query.Where(x => x.SessionId == model.SessionId);
+                vm = query.Select(x => new RoutineModel
                 {
                     Id = x.Id,
                     SessionName = x.Session.Name,
