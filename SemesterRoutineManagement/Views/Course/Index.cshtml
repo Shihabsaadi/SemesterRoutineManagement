@@ -16,18 +16,27 @@
                         <thead>
                             <tr>
                                 <th width="1%">Sl</th>
+                                <th>Code</th>
                                 <th>Name</th>
+                                <th>Semester</th>
                                 <th width="1%">Status</th>
                                 @if (User.IsInRole("SuperAdmin"))
                                 {
-                                    <th width="1%" class="text-center"><button data-toggle="modal" href="#course-modal" title="Create Course" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>}
-                                </tr>
+                                    <th width="1%" class="text-center"><button data-toggle="modal" href="#course-modal" title="Create Course" class="btn btn-sm btn-primary" ng-click="onClick('Sync')"><i class="fa fa-plus-circle"></i></button></th>
+                                }
+                            </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in CourseList">
                                 <td>{{$index+1}}</td>
                                 <td>
+                                    {{item.Code}}
+                                </td>
+                                <td>
                                     {{item.Name}}
+                                </td>
+                                <td>
+                                    {{item.TermName}}
                                 </td>
                                 <td>
                                     <label ng-show="item.Status==1" class="badge badge-success">Active</label>

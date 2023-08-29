@@ -16,5 +16,7 @@ namespace SemesterRoutineManagement.Models
         public DateTime ModifiedAt { get; set; }
         public int ModifedBy { get; set; }
         public bool? Status { get; set; }
+        public Term Term { get; set; }
+        public string TermName { get; set; }
     }
 }

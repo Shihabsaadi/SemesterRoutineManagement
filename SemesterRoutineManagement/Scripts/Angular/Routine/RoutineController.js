@@ -39,7 +39,7 @@
                 data =
                 {
                     SessionId: $scope.Session.Id,
-                    TermName: $scope.Semester
+                    Term: $scope.Semester!=null? $scope.Semester.Id:null
                 }
                 routineService.getRoutine(data).then(function (response) {
                     $scope.RoutineListBySession = response.data
@@ -112,17 +112,18 @@
          
             case "getSemester":
                 if ($scope.Session.Semester == 0) {
-                    $scope.semesterList = ['FirstYearFirstSemester',
-                        'SecondYearFirstSemester',
-                        'ThirdYearFirstSemester',
-                        'FourthYearFirstSemester']
+                    $scope.semesterList = [{ Id: 1, Name: 'FirstYearFirstSemester' },
+                    { Id: 3, Name: 'SecondYearFirstSemester' },
+                    { Id: 5, Name: 'ThirdYearFirstSemester' },
+                    { Id: 7, Name: 'FourthYearFirstSemester' }]
                 }
                 else {
                     $scope.semesterList
-                    = ['FirstYearSecondSemester',
-                       'SecondYearSecondSemester',
-                       'ThirdYearSecondSemester',
-                       'FourthYearSecondSemester']
+                        = [
+                            { Id: 2, Name: 'FirstYearSecondSemester' },
+                            { Id: 4, Name: 'SecondYearSecondSemester' },
+                            { Id: 6, Name: 'ThirdYearSecondSemester' },
+                            { Id: 8, Name: 'FourthYearSecondSemester' } ]    
                 }
                 break;
             case "Generate":

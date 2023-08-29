@@ -27,7 +27,10 @@ namespace SemesterRoutineManagement.Controllers
             if (obj.Role == "SuperAdmin")
             {
                 var query = Routines.Where(x => x.SessionId == model.SessionId).AsQueryable();
-                if (!string.IsNullOrEmpty(model.TermName)) query = query.Where(x => ((Term)x.Term).ToString() == model.TermName);
+                if (model.Term != 0)
+                {
+                    query = query.Where(x => x.Term == model.Term - 1);
+                }
                 vm = query.Select(x => new RoutineModel
                 {
                     Id = x.Id,
@@ -46,7 +49,12 @@ namespace SemesterRoutineManagement.Controllers
             else if (obj.Role == "Teacher")
             {
                 Routines = db.Routines.Where(x => x.TeacherId == obj.Id).ToList();
-                vm = Routines.Where(x => x.SessionId == model.SessionId).Select(x => new RoutineModel
+                var query = Routines.Where(x => x.SessionId == model.SessionId).AsQueryable();
+                if (model.Term != 0)
+                {
+                    query = query.Where(x => x.Term == model.Term - 1);
+                }
+                vm = query.Select(x => new RoutineModel
                 {
                     Id = x.Id,
                     SessionName = x.Session.Name,
@@ -63,15 +71,27 @@ namespace SemesterRoutineManagement.Controllers
             else if (obj.Role == "Student")
             {
                 List<int> ids = db.StudentCourseEnrollments.Where(x => x.StudentId == obj.Id).Select(x => x.Term).ToList();
-                var query = db.Routines.Where(x => ids.Contains(x.Term)).AsQueryable();
-                var ss = query.ToList();
-                if (!string.IsNullOrEmpty(model.TermName)) query = query.Where(x => ((Term)x.Term).ToString() == model.TermName);
-                query = query.Where(x => x.SessionId == model.SessionId);
-                vm = query.Select(x => new RoutineModel
+
+                var query = db.Routines
+                    .Where(x => ids.Contains(x.Term))
+                    .AsQueryable();
+
+                var countList = query.ToList();
+
+                if (countList.Count() == 0)
+                    return Json(null, JsonRequestBehavior.AllowGet);
+                if (model.Term!=0)
+                {
+                    query = query.Where(x => x.Term == model.Term-1);
+                }
+
+                var data = query.Where(x => x.SessionId == model.SessionId).ToList();
+
+                vm = data.Select(x => new RoutineModel
                 {
                     Id = x.Id,
                     SessionName = x.Session.Name,
-                    TermName = ((Term)x.Term).ToString(),
+                    TermName = x.Term.ToString(), // Apply ToString() conversion here
                     RoomNo = x.Room.No,
                     StartTime = x.TimeSpan.startTime,
                     EndTime = x.TimeSpan.endTime,

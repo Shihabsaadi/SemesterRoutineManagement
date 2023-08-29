@@ -16,7 +16,6 @@
             SessionId: $scope.Session.Id,
             Term: $scope.Semester.Id
         }
-        console.log('data', data)
         studentCourseEnrollmentService.getAvailableStudentList(data).then(function (response) {
             $scope.studentList = response.data;
         })
@@ -31,13 +30,10 @@
         var data = []
         switch (expression) {
             case "Sync":
-                //sync();
+                sync();
                 break;
             case "EditStudentCourseEnrollment":
-                //$scope.Id = obj.Id
-                //$scope.Teacher = obj.TeacherId
-                //$scope.Course = obj.CourseId
-                //$scope.Status = obj.Status
+               
                 break;
             case "SaveStudentEnrollment":
                 var selectedItems = $scope.studentList.filter(function (item) {
@@ -119,14 +115,7 @@
                 break;
              default:
         }
-        var sync = function () {
-            $scope.Id = null
-            $scope.Session = null
-            $scope.Course = null
-            $scope.selectedItems = null
-            getStudentCourseEnrollmentList()
-            getSessionList()
-        }
+   
     }
     $scope.onChange = function (expression, obj) {
         var data = []
@@ -153,14 +142,13 @@
                 break;
             default:
         }
-        //var sync = function () {
-        //    $scope.Id = null
-        //    $scope.Teacher = null
-        //    $scope.Course = null
-        //    $scope.Status = null
-        //    getStudentCourseEnrollmentList()
-        //    getTeacherList()
-        //    getCourseList()
-        //}
+        var sync = function () {
+            $scope.Id = null
+            $scope.Session = null
+            $scope.Course = null
+            $scope.selectedItems = null
+            getStudentCourseEnrollmentList()
+            getSessionList()
+        }
     }
 });
